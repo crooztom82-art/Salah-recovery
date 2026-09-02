@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102a43">
+<title>Salah Recovery Pro</title>
+<style>
+:root{--bg:#f5f7fa;--card:#fff;--text:#142235;--muted:#718096;--brand:#102a43;--brand2:#2f6f95;--soft:#edf3f7;--line:#e3e8ee;--good:#2d8a59;--warn:#c27a18;--bad:#b63c45;--shadow:0 8px 28px #102a4310}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}.app{max-width:560px;margin:auto;min-height:100vh;padding-bottom:92px}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:18px 16px 8px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);z-index:4}.title{font-size:23px;font-weight:800}.muted{color:var(--muted);font-size:13px}.card{background:var(--card);margin:10px 14px;padding:16px;border-radius:20px;box-shadow:var(--shadow);border:1px solid color-mix(in srgb,var(--line) 65%,transparent)}.hero{background:linear-gradient(135deg,#102a43,#285b78);color:white;overflow:hidden;position:relative}.hero:after{content:"☾";position:absolute;right:20px;top:10px;font-size:74px;opacity:.08}.hero .muted{color:#d4e3ed}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:var(--soft);border-radius:15px;padding:12px;text-align:center}.stat b{font-size:21px;display:block}.progress,.bar{height:9px;background:#e5eaf0;border-radius:99px;overflow:hidden}.progress i,.bar i{display:block;height:100%;background:var(--brand2);border-radius:99px}.prayer{display:flex;align-items:center;justify-content:space-between;padding:14px 2px;border-bottom:1px solid var(--line)}.prayer:last-child{border-bottom:0}.pname{display:flex;align-items:center;gap:11px}.icon{width:38px;height:38px;border-radius:13px;background:var(--soft);display:grid;place-items:center;font-size:18px}.status{font-size:12px;font-weight:750}.done{color:var(--good)}.missed{color:var(--bad)}.planned{color:var(--brand2)}.upcoming{color:var(--muted)}.btn{border:0;border-radius:13px;padding:10px 13px;font-weight:750}.primary{background:var(--brand);color:white}.soft{background:var(--soft);color:var(--brand)}.danger{background:var(--bad);color:white}.gold{background:#b8860b;color:#fff}.mini{padding:7px 9px;font-size:12px}.count{font-size:25px;font-weight:850}.countdown{font-size:13px;color:#d9e5ed;margin-top:5px}.alarm{border:1px dashed #9eb7c8;background:var(--soft);border-radius:15px;padding:13px}.tabs{display:flex;gap:7px;overflow:auto;padding:4px 14px 9px}.tabs button{white-space:nowrap;border:0;border-radius:20px;padding:8px 13px;background:var(--soft);color:var(--muted)}.tabs .sel{background:var(--brand);color:#fff}.nav{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:auto;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 3px calc(7px + env(safe-area-inset-bottom));z-index:10}.nav button{background:none;border:0;color:var(--muted);font-size:10px;padding:4px}.nav button.active{color:var(--brand);font-weight:800}.nav span{display:block;font-size:20px;margin-bottom:2px}.modal{position:fixed;inset:0;background:#0009;display:grid;align-items:end;z-index:30}.sheet{background:var(--card);border-radius:25px 25px 0 0;padding:22px;max-width:560px;width:100%;margin:auto;max-height:90vh;overflow:auto}.actions{display:flex;gap:8px;margin-top:13px}.actions>*{flex:1}select,input,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);margin-top:6px}textarea{min-height:90px}.option{padding:11px;border:1px solid var(--line);border-radius:12px;margin:6px 0}.option.sel{border-color:var(--brand2);background:var(--soft)}.toggle{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}.toggle:last-child{border:0}.switch{width:48px;height:28px;border:0;border-radius:99px;background:#c6cdd5;position:relative}.switch i{position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;left:4px;top:4px;transition:.2s}.switch.on{background:var(--brand)}.switch.on i{left:24px}.feature{display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.feature:last-child{border:0}.featureIcon{width:42px;height:42px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:20px}.empty{text-align:center;padding:30px;color:var(--muted)}.badge{display:inline-block;padding:5px 8px;border-radius:99px;background:var(--soft);font-size:11px;font-weight:750}.qibla{width:190px;height:190px;margin:10px auto;border:12px solid var(--soft);border-radius:50%;display:grid;place-items:center;position:relative}.needle{font-size:58px;transform-origin:center;transition:transform .5s}.compassN{position:absolute;top:3px;font-weight:800}.tasbih{font-size:64px;text-align:center;font-weight:900;padding:12px}.tap{width:180px;height:180px;border-radius:50%;border:0;background:var(--brand);color:#fff;font-size:20px;font-weight:850;box-shadow:0 12px 30px #102a4330}.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#172a3a;color:#fff;padding:11px 15px;border-radius:13px;z-index:50;font-size:13px;box-shadow:0 10px 30px #0003}.dark{--bg:#0d131d;--card:#151d29;--text:#edf2f7;--muted:#9ca9b8;--brand:#8fc2df;--brand2:#74a9c8;--soft:#202c3a;--line:#2c3948;--good:#63c58b;--warn:#e2ad56;--bad:#ef777d}.dark .primary{color:#07121d;background:#8fc2df}.dark .soft{color:#e9f3f9}.dark .hero{background:linear-gradient(135deg,#162c40,#23465c)}.dark .nav{background:color-mix(in srgb,var(--card) 94%,transparent)}.small{font-size:11px}.center{text-align:center}.rtl{direction:rtl}.pillrow{display:flex;flex-wrap:wrap;gap:7px}.hide{display:none!important}
+</style>
+
+<style id="salah-advanced-addon">
+.advanced-strip{margin:12px 14px;padding:16px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,var(--card),var(--soft));box-shadow:var(--shadow)}
+.advanced-strip .adv-title{font-size:18px;font-weight:800}.adv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}.adv-chip{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:11px;text-align:left}.adv-chip b{display:block}.adv-chip span{font-size:12px;color:var(--muted)}
+.adv-modal{position:fixed;inset:0;background:#06111dcc;z-index:30;display:grid;place-items:end center;padding:12px}.adv-sheet{width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--card);color:var(--text);border-radius:24px;padding:18px;box-shadow:0 20px 70px #0005}
+.adv-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.adv-row:last-child{border-bottom:0}
+.range{width:100%}.countdown-big{font-size:42px;font-weight:900;letter-spacing:-1px}.pulse{animation:salahPulse 1.8s infinite}@keyframes salahPulse{50%{transform:scale(1.025)}}
+.adhan-player{padding:14px;border-radius:16px;background:var(--soft);margin-top:10px}.adv-note{font-size:12px;color:var(--muted);line-height:1.45}
+</style>
+</head>
+<body><div id="root"></div>
+<script>
+const PR=["Fajr","Dhuhr","Asr","Maghrib","Isha"], ICON={Fajr:"🌅",Dhuhr:"☀️",Asr:"🌤️",Maghrib:"🌇",Isha:"🌙"};
+const CITY={Karachi:[24.8607,67.0011,"Pakistan"],Lahore:[31.5204,74.3587,"Pakistan"],Islamabad:[33.6844,73.0479,"Pakistan"],Makkah:[21.4225,39.8262,"Saudi Arabia"],Madinah:[24.4672,39.6024,"Saudi Arabia"],Riyadh:[24.7136,46.6753,"Saudi Arabia"],Dubai:[25.2048,55.2708,"UAE"],London:[51.5074,-.1278,"UK"],"New York":[40.7128,-74.006,"USA"]};
+const COUNTRIES=[
+["Afghanistan",34.5553,69.2075,"Asia/Kabul","fa",3],["Albania",41.3275,19.8187,"Europe/Tirane","sq",3],["Algeria",36.7538,3.0588,"Africa/Algiers","ar",5],["Azerbaijan",40.4093,49.8671,"Asia/Baku","az",3],["Bahrain",26.2235,50.5876,"Asia/Bahrain","ar",4],["Bangladesh",23.8103,90.4125,"Asia/Dhaka","bn",1],["Egypt",30.0444,31.2357,"Africa/Cairo","ar",5],["Indonesia",-6.2088,106.8456,"Asia/Jakarta","id",11],["Iran",35.6892,51.389,"Asia/Tehran","fa",7],["Iraq",33.3152,44.3661,"Asia/Baghdad","ar",3],["Jordan",31.9454,35.9284,"Asia/Amman","ar",3],["Kazakhstan",43.2389,76.8897,"Asia/Almaty","kk",3],["Kuwait",29.3759,47.9774,"Asia/Kuwait","ar",4],["Lebanon",33.8938,35.5018,"Asia/Beirut","ar",3],["Malaysia",3.139,101.6869,"Asia/Kuala_Lumpur","ms",11],["Maldives",4.1755,73.5093,"Indian/Maldives","en",1],["Morocco",33.5731,-7.5898,"Africa/Casablanca","ar",3],["Nigeria",9.0765,7.3986,"Africa/Lagos","en",3],["Oman",23.588,58.3829,"Asia/Muscat","ar",8],["Pakistan",24.8607,67.0011,"Asia/Karachi","ur",1],["Palestine",31.9522,35.2332,"Asia/Gaza","ar",3],["Qatar",25.2854,51.531,"Asia/Qatar","ar",4],["Saudi Arabia",24.7136,46.6753,"Asia/Riyadh","ar",4],["Senegal",14.7167,-17.4677,"Africa/Dakar","fr",3],["Somalia",2.0469,45.3182,"Africa/Mogadishu","so",3],["Sudan",15.5007,32.5599,"Africa/Khartoum","ar",5],["Syria",33.5138,36.2765,"Asia/Damascus","ar",3],["Tajikistan",38.5598,68.787,"Asia/Dushanbe","fa",3],["Tunisia",36.8065,10.1815,"Africa/Tunis","ar",3],["Turkey",41.0082,28.9784,"Europe/Istanbul","tr",13],["Uganda",0.3476,32.5825,"Africa/Kampala","en",3],["United Arab Emirates",25.2048,55.2708,"Asia/Dubai","ar",16],["Uzbekistan",41.2995,69.2401,"Asia/Tashkent","uz",3],["Yemen",12.7855,45.0187,"Asia/Aden","ar",4],["Benin",6.4969,2.6289,"Africa/Porto-Novo","fr",3],["Burkina Faso",12.3714,-1.5197,"Africa/Ouagadougou","fr",3],["Cameroon",3.848,11.5021,"Africa/Douala","fr",3],["Chad",12.1348,15.0557,"Africa/Ndjamena","ar",3],["Comoros",-11.7172,43.2473,"Indian/Comoro","fr",3],["Côte d’Ivoire",5.36,-4.0083,"Africa/Abidjan","fr",3],["Djibouti",11.5721,43.1456,"Africa/Djibouti","ar",3],["Gabon",0.4162,9.4673,"Africa/Libreville","fr",3],["Gambia",13.4549,-16.579,"Africa/Banjul","en",3],["Guinea",9.6412,-13.5784,"Africa/Conakry","fr",3],["Guinea-Bissau",11.8817,-15.617,"Africa/Bissau","fr",3],["Guyana",6.8013,-58.1551,"America/Guyana","en",3],["Libya",32.8872,13.1913,"Africa/Tripoli","ar",3],["Mali",12.6392,-8.0029,"Africa/Bamako","fr",3],["Mauritania",18.0735,-15.9582,"Africa/Nouakchott","ar",3],["Mozambique",-25.9692,32.5732,"Africa/Maputo","fr",3],["Niger",13.5127,2.1128,"Africa/Niamey","fr",3],["Sierra Leone",8.4657,-13.2317,"Africa/Freetown","en",3],["Suriname",5.852,-55.2038,"America/Paramaribo","en",3],["Togo",6.1256,1.2254,"Africa/Lome","fr",3],["Turkmenistan",37.9601,58.3261,"Asia/Ashgabat","uz",3],["Western Sahara",27.1536,-13.2031,"Africa/El_Aaiun","ar",3],['Andorra',42.5063,1.5218,'Andorra la Vella',['ca'],3],
+['Angola',-8.82727,13.243951,'Luanda',['pt'],3],
+['Antigua and Barbuda',47.561701,-52.715149,"Saint John's",['en'],3],
+['Argentina',-34.607568,-58.437089,'Buenos Aires',['es', 'gn'],3],
+['Armenia',40.177612,44.512585,'Yerevan',['hy', 'ru'],3],
+['Australia',-35.297591,149.101268,'Canberra',['en'],3],
+['Austria',48.208354,16.372504,'Vienna',['de'],3],
+['Bahamas',25.078346,-77.338333,'Nassau',['en'],3],
+['Barbados',13.097783,-59.618418,'Bridgetown',['en'],3],
+['Belarus',53.902334,27.561879,'Minsk',['be', 'ru'],3],
+['Belgium',50.846557,4.351697,'Brussels',['nl', 'fr', 'de'],3],
+['Belize',17.250199,-88.770018,'Belmopan',['en', 'es'],3],
+['Bhutan',27.472762,89.629548,'Thimphu',['dz'],3],
+['Bolivia',-19.047725,-65.259431,'Sucre',['es', 'ay', 'qu'],3],
+['Bosnia and Herzegovina',43.851977,18.386687,'Sarajevo',['bs', 'hr', 'sr'],3],
+['Botswana',-24.658136,25.908847,'Gaborone',['en', 'tn'],3],
+['Brazil',-10.333333,-53.2,'Brasília',['pt'],3],
+['Brunei',4.889545,114.941757,'Bandar Seri Begawan',['ms'],3],
+['Bulgaria',-15.25384,48.256216,'Sofia',['bg'],3],
+['Burundi',-3.363812,29.367503,'Bujumbura',['fr', 'rn'],3],
+['Cabo Verde',14.916017,-23.509613,'Praia',['pt'],3],
+['Cambodia',11.568271,104.922443,'Phnom Penh',['km'],3],
+['Canada',45.421106,-75.690308,'Ottawa',['en', 'fr'],3],
+['Central African Republic',4.390715,18.550913,'Bangui',['fr', 'sg'],3],
+['Chile',9.869479,-83.798075,'Santiago',['es'],3],
+['China',39.906217,116.391276,'Beijing',['zh'],3],
+['Colombia',4.59808,-74.076044,'Bogotá',['es'],3],
+['Congo',-4.2634,15.2429,'Brazzaville',['fr'],3],
+['Costa Rica',9.932543,-84.079578,'San José',['es'],3],
+['Croatia',45.813177,15.977048,'Zagreb',['hr'],3],
+['Cuba',23.135305,-82.358963,'Havana',['es'],3],
+['Cyprus',35.17393,33.364726,'Nicosia',['el', 'tr', 'hy'],3],
+['Czech Republic',50.087465,14.421254,'Prague',['cs', 'sk'],3],
+['Denmark',55.686724,12.570072,'Copenhagen',['da'],3],
+['Dominica',48.771037,-95.769788,'Roseau',['en'],3],
+['Dominican Republic',18.480197,-69.942111,'Santo Domingo',['es'],3],
+['Ecuador',-0.220164,-78.512327,'Quito',['es'],3],
+['El Salvador',13.698994,-89.191425,'San Salvador',['es'],3],
+['Equatorial Guinea',3.752828,8.780061,'Malabo',['es', 'fr'],3],
+['Eritrea',15.338967,38.932676,'Asmara',['ti', 'ar', 'en'],3],
+['Estonia',59.437216,24.745369,'Tallinn',['et'],3],
+['Eswatini',-26.446285,31.208378,'Lobamba',['en', 'ss'],3],
+['Ethiopia',9.010793,38.761252,'Addis Ababa',['am'],3],
+['Fiji',-18.141588,178.442166,'Suva',['en', 'fj', 'hi', 'ur'],3],
+['Finland',60.16741,24.942577,'Helsinki',['fi', 'sv'],3],
+['France',48.856697,2.351462,'Paris',['fr'],3],
+['Georgia',41.693459,44.80145,'Tbilisi',['ka'],3],
+['Germany',52.517036,13.38886,'Berlin',['de'],3],
+['Ghana',5.560014,-0.205744,'Accra',['en'],3],
+['Greece',37.983941,23.728305,'Athens',['el'],3],
+['Grenada',48.658138,6.928099,"St. George's",['en'],3],
+['Guatemala',14.622233,-90.518519,'Guatemala City',['es'],3],
+['Haiti',18.547327,-72.339593,'Port-au-Prince',['fr', 'ht'],3],
+['Honduras',14.105686,-87.204676,'Tegucigalpa',['es'],3],
+['Hungary',0,0,'Hungary',['en'],3],
+['Iceland',64.145981,-21.942237,'Reykjavik',['is'],3],
+['India',28.614179,77.202266,'New Delhi',['hi', 'en'],3],
+['Ireland',53.349764,-6.260273,'Dublin',['ga', 'en'],3],
+['Israel',31.778345,35.225079,'Jerusalem',['he', 'ar'],3],
+['Italy',41.89332,12.482932,'Rome',['it'],3],
+['Ivory Coast',6.809107,-5.273263,'Yamoussoukro',['fr'],3],
+['Jamaica',17.971215,-76.792813,'Kingston',['en'],3],
+['Japan',35.682839,139.759455,'Tokyo',['ja'],3],
+['Kenya',-1.283253,36.817245,'Nairobi',['en', 'sw'],3],
+['Kiribati',1.349078,173.038651,'South Tarawa',['en'],3],
+['Kyrgyzstan',42.876562,74.607008,'Bishkek',['ky', 'ru'],3],
+['Laos',17.964099,102.613371,'Vientiane',['lo'],3],
+['Latvia',56.949398,24.105185,'Riga',['lv'],3],
+['Lesotho',-29.310054,27.478222,'Maseru',['en', 'st'],3],
+['Liberia',6.328034,-10.797788,'Monrovia',['en'],3],
+['Liechtenstein',47.139286,9.522796,'Vaduz',['de'],3],
+['Lithuania',54.687046,25.282911,'Vilnius',['lt'],3],
+['Luxembourg',49.815868,6.129675,'Luxembourg',['fr', 'de', 'lb'],3],
+['Madagascar',-18.910012,47.525581,'Antananarivo',['fr', 'mg'],3],
+['Malawi',-13.987511,33.768144,'Lilongwe',['en', 'ny'],3],
+['Malta',35.898982,14.513676,'Valletta',['mt', 'en'],3],
+['Marshall Islands',7.090992,171.381635,'Majuro',['en', 'mh'],3],
+['Mauritius',-20.163728,57.504533,'Port Louis',['en'],3],
+['Mexico',19.43263,-99.133178,'Mexico City',['es'],3],
+['Micronesia',6.9248,158.1611,'Palikir',['en'],3],
+['Moldova',47.024471,28.832253,'Chișinău',['ro'],3],
+['Monaco',43.732349,7.427683,'Monaco',['fr'],3],
+['Mongolia',47.918468,106.917702,'Ulan Bator',['mn'],3],
+['Montenegro',42.4304,19.2594,'Podgorica',['sr'],3],
+['Myanmar',19.7633,96.0785,'Naypyidaw',['my'],3],
+['Namibia',-22.574392,17.079069,'Windhoek',['en', 'af'],3],
+['Nauru',-0.547101,166.9164,'Yaren',['en', 'na'],3],
+['Nepal',27.708317,85.320582,'Kathmandu',['ne'],3],
+['Netherlands',52.37276,4.893604,'Amsterdam',['nl'],3],
+['New Zealand',-41.288795,174.777211,'Wellington',['en', 'mi'],3],
+['Nicaragua',12.145991,-86.274666,'Managua',['es'],3],
+['North Korea',39.019474,125.753388,'Pyongyang',['ko'],3],
+['North Macedonia',42.0,21.43,'Skopje',['mk'],3],
+['Norway',59.91333,10.73897,'Oslo',['no', 'nb', 'nn'],3],
+['Palau',7.500619,134.624301,'Ngerulmud',['en'],3],
+['Panama',8.971449,-79.53418,'Panama City',['es'],3],
+['Papua New Guinea',-9.47433,147.15995,'Port Moresby',['en'],3],
+['Paraguay',-25.280046,-57.634381,'Asunción',['es', 'gn'],3],
+['Peru',-12.062106,-77.036526,'Lima',['es'],3],
+['Philippines',14.590622,120.97997,'Manila',['en'],3],
+['Poland',52.233717,21.071411,'Warsaw',['pl'],3],
+['Portugal',38.707751,-9.136592,'Lisbon',['pt'],3],
+['Romania',44.436141,26.10272,'Bucharest',['ro'],3],
+['Russia',55.750446,37.617494,'Moscow',['ru'],3],
+['Rwanda',-1.88596,30.129675,'Kigali',['rw', 'en', 'fr'],3],
+['Saint Kitts and Nevis',17.296092,-62.722301,'Basseterre',['en'],3],
+['Saint Lucia',13.952589,-60.987824,'Castries',['en'],3],
+['Saint Vincent and the Grenadines',13.156186,-61.227962,'Kingstown',['en'],3],
+['Samoa',-13.834369,-171.769279,'Apia',['sm', 'en'],3],
+['San Marino',43.9364,12.446699,'City of San Marino',['it'],3],
+['Sao Tome and Principe',0.338924,6.731303,'São Tomé',['pt'],3],
+['Serbia',44.817813,20.456897,'Belgrade',['rs'],3],
+['Seychelles',-36.59861,144.678005,'Victoria',['fr', 'en'],3],
+['Singapore',1.357107,103.819499,'Singapore',['en', 'ms', 'ta', 'zh'],3],
+['Slovakia',48.151699,17.109306,'Bratislava',['sk'],3],
+['Slovenia',46.04998,14.50686,'Ljubljana',['sl'],3],
+['Solomon Islands',-9.431077,159.955255,'Honiara',['en'],3],
+['South Africa',-25.745937,28.187944,'Pretoria',['af', 'en', 'nr', 'st', 'ss', 'tn', 'ts', 've', 'xh', 'zu'],3],
+['South Korea',37.566679,126.978291,'Seoul',['ko'],3],
+['South Sudan',4.847202,31.595166,'Juba',['en'],3],
+['Spain',40.416705,-3.703582,'Madrid',['es'],3],
+['Sri Lanka',6.934997,79.853846,'Colombo',['si', 'ta'],3],
+['Sweden',59.325117,18.071094,'Stockholm',['sv'],3],
+['Switzerland',46.948271,7.451451,'Bern',['de', 'fr', 'it'],3],
+['Taiwan',25.03752,121.56368,'Taipei',['zh'],3],
+['Tanzania',-6.337282,35.737177,'Dodoma',['sw', 'en'],3],
+['Thailand',13.754253,100.493087,'Bangkok',['th'],3],
+['Timor-Leste',-8.5569,125.5603,'Dili',['pt', 'tet'],3],
+['Tonga',-21.13434,-175.201808,"Nuku'alofa",['en', 'to'],3],
+['Trinidad and Tobago',10.657268,-61.518017,'Port of Spain',['en'],3],
+['Tuvalu',-8.534995,179.11865,'Funafuti',['en'],3],
+['Ukraine',50.450034,30.524136,'Kiev',['uk'],3],
+['United Kingdom',51.507322,-0.127647,'London',['en'],3],
+['United States',38.894986,-77.036571,'Washington D.C.',['en'],3],
+['Uruguay',-34.905904,-56.191357,'Montevideo',['es'],3],
+['Vanuatu',-17.741497,168.315016,'Port Vila',['bi', 'en', 'fr'],3],
+['Vatican City',41.9029,12.4534,'Vatican City',['it', 'la'],3],
+['Venezuela',10.506098,-66.914602,'Caracas',['es'],3],
+['Vietnam',21.02945,105.854444,'Hanoi',['vi'],3],
+['Zambia',-15.416449,28.282154,'Lusaka',['en'],3],
+['Zimbabwe',-17.831773,31.045686,'Harare',['en', 'sn', 'nd'],3],];
+const LANG_NAMES={"af": "Afrikaans", "am": "Amharic", "ar": "العربية", "ay": "Aymara", "az": "Azərbaycanca", "be": "Belarusian", "bg": "Bulgarian", "bi": "Bislama", "bn": "বাংলা", "bs": "Bosnian", "ca": "Catalan", "cs": "Czech", "da": "Danish", "de": "German", "dz": "Dzongkha", "el": "Modern Greek (1453-)", "en": "English", "es": "Spanish", "et": "Estonian", "fa": "فارسی", "fi": "Finnish", "fj": "Fijian", "fr": "Français", "ga": "Irish", "gn": "Guarani", "he": "Hebrew", "hi": "Hindi", "hr": "Croatian", "ht": "Haitian", "hy": "Armenian", "id": "Bahasa Indonesia", "is": "Icelandic", "it": "Italian", "ja": "Japanese", "ka": "Georgian", "kk": "Қазақша", "km": "Khmer", "ko": "Korean", "ky": "Kirghiz", "la": "Latin", "lb": "Luxembourgish", "lo": "Lao", "lt": "Lithuanian", "lv": "Latvian", "mg": "Malagasy", "mh": "Marshallese", "mi": "Maori", "mk": "Macedonian", "mn": "Mongolian", "ms": "Bahasa Melayu", "mt": "Maltese", "my": "Burmese", "na": "Nauru", "nb": "Norwegian Bokmål", "nd": "North Ndebele", "ne": "Nepali (macrolanguage)", "nl": "Dutch", "nn": "Norwegian Nynorsk", "no": "Norwegian", "nr": "South Ndebele", "ny": "Nyanja", "pl": "Polish", "pt": "Portuguese", "qu": "Quechua", "rn": "Rundi", "ro": "Romanian", "rs": "rs", "ru": "Русский", "rw": "Kinyarwanda", "sg": "Sango", "si": "Sinhala", "sk": "Slovak", "sl": "Slovenian", "sm": "Samoan", "sn": "Shona", "so": "Soomaali", "sq": "Shqip", "sr": "Serbian", "ss": "Swati", "st": "Southern Sotho", "sv": "Swedish", "sw": "Swahili (macrolanguage)", "ta": "Tamil", "tet": "Tetum", "th": "Thai", "ti": "Tigrinya", "tn": "Tswana", "to": "Tonga (Tonga Islands)", "tr": "Türkçe", "ts": "Tsonga", "uk": "Ukrainian", "ur": "اردو", "uz": "O‘zbekcha", "ve": "Venda", "vi": "Vietnamese", "xh": "Xhosa", "zh": "Chinese", "zu": "Zulu"};
+const LEGACY_COUNTRY_MAP={Pakistan:"Karachi",Saudi_Arabia:"Riyadh",United_Arab_Emirates:"Dubai",Turkey:"Istanbul",United_Kingdom:"London"};
+function countryInfo(){return COUNTRIES.find(x=>x[0]===d.country)||COUNTRIES.find(x=>x[0]==="Pakistan");}
+function countryLangs(c){let a=Array.isArray(c?.[4])?c[4]:[c?.[4]||"en"];return [...new Set(a.filter(Boolean))]}
+function countryCapital(c){return c?.[3]||c?.[0]||""}
+function findCountry(name){if(!name)return null;const aliases={UK:"United Kingdom",USA:"United States",UAE:"United Arab Emirates"};return COUNTRIES.find(x=>x[0]===name)||COUNTRIES.find(x=>x[0]===aliases[name])||null}
+function applyCountry(name){const c=findCountry(name);if(!c)return;d.country=c[0];d.city=countryCapital(c);d.lat=c[1];d.lon=c[2];d.timezone=c[3]||"";d.method=c[5]||3;const ls=countryLangs(c);if(d.langMode!=="manual"||!ls.includes(d.lang))d.lang=ls[0]||"en";d.langMode="country";save();fetchTimes(true);render();}
+function applyLocation(value){if(value.startsWith("country:")){const name=value.slice(8);applyCountry(name);return;}const city=value.startsWith("city:")?value.slice(5):value;if(CITY[city]){d.city=city;d.lat=null;d.lon=null;const c=findCountry(CITY[city][2]);if(c){d.country=c[0];d.timezone=c[3]||"";if(d.langMode!=="manual")d.lang=countryLangs(c)[0]||d.lang;}save();fetchTimes(true);render();}}
+function countryLocationOptions(){return COUNTRIES.map(c=>`<option value="country:${esc(c[0])}" ${c[0]===d.country?"selected":""}>${esc(c[0])} — ${esc(countryCapital(c))}</option>`).join("")}
+
+const METHODS={Karachi:1,MWL:3,Egypt:5,UmmAlQura:4,Tehran:7,Dubai:16,Turkey:13,Singapore:11};
+const REASONS=["Overslept","Forgot","Work","School","Travel","Health/personal circumstances","Family responsibilities","Lost track of time","No suitable place","Low motivation","Intentionally delayed","Other"];
+const DUAS=[
+["After Fard prayer","Astaghfirullah ×3","سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَاللَّهُ أَكْبَرُ"],
+["Before sleeping","Ayat al-Kursi","Recite Ayat al-Kursi before sleep."],
+["Morning","Allahumma inni as'aluka ilman nafi'an","اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا"],
+["For consistency","Rabbana la tuzigh qulubana","رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا"],
+["When you miss a prayer","Turn back to Allah","Make sincere tawbah and take the next practical step."]
+];
+let d=JSON.parse(localStorage.getItem("salah_recovery_pro_v5")||"null")||{
+onboard:false,city:"Karachi",lat:null,lon:null,madhab:"Hanafi",method:1,theme:"light",timezone:"Asia/Karachi",
+records:[],alarms:true,adhan:true,lead:10,fajrAdhan:true,focus:false,sound:"adhan",
+prayers:{},notes:[],tasbih:0,streakBest:0,lastFetch:"",qibla:null,customTune:0
+};
+const legacy=JSON.parse(localStorage.getItem("salah_recovery_pro_v3")||"null");
+if(legacy&&(!d.country||!d.lang)){d.country=legacy.country||"Pakistan";d.lang=legacy.lang||"ur";d.langMode=legacy.langMode||"country";d.madhab=legacy.madhab||d.madhab;d.theme=legacy.theme||d.theme;d.records=legacy.records||d.records;d.notes=legacy.notes||d.notes;d.tasbih=legacy.tasbeeh||d.tasbih;d.ramadan=legacy.ramadan||false;d.qaza=legacy.qaza||{};const ci=COUNTRIES.find(x=>x[0]===d.country);if(ci){d.city=countryCapital(ci);d.lat=ci[1];d.lon=ci[2];d.timezone=ci[3]||"";d.method=ci[5];}save()}
+if(!d.country){d.country="Pakistan";d.lang="ur";d.langMode="country";}
+if(!d.timezone){const ci=findCountry(d.country);if(ci)d.timezone=ci[3]||"Asia/Karachi";}
+d.records ||= []; d.prayers ||= {}; d.notes ||= []; d.lead=Number.isFinite(d.lead)?d.lead:10;
+let page="today",modal=null,selected=null,reason="",toastTimer=null,audioCtx=null,lastAlarmKey="",lastAdhanKey="",wake=null;
+
+function save(){localStorage.setItem("salah_recovery_pro_v5",JSON.stringify(d))}
+function locationTimeZone(){return d.timezone||countryInfo()?.[3]||Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"}
+function locationDateKey(){try{return new Intl.DateTimeFormat("en-CA",{timeZone:locationTimeZone(),year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}catch(e){return new Date().toLocaleDateString("en-CA")}}
+function todayKey(){return locationDateKey()}
+function zonedDate(dateKey,time){let m=String(time).match(/(\d{1,2}):(\d{2})/);if(!m)return null;let h=+m[1],mi=+m[2];let guess=new Date(`${dateKey}T${String(h).padStart(2,"0")}:${String(mi).padStart(2,"0")}:00Z`);try{const parts=new Intl.DateTimeFormat("en-US",{timeZone:locationTimeZone(),hour12:false,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(guess);let o={};parts.forEach(x=>o[x.type]=x.value);let asUTC=Date.UTC(+o.year,+o.month-1,+o.day,+o.hour,+o.minute,+o.second);let target=Date.UTC(+dateKey.slice(0,4),+dateKey.slice(5,7)-1,+dateKey.slice(8,10),h,mi,0);guess=new Date(guess.getTime()+(target-asUTC));}catch(e){}return guess}
+
+function fmt(x){return new Date(x+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"})}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toast(x){clearTimeout(toastTimer);let e=document.createElement("div");e.className="toast";e.textContent=x;document.body.appendChild(e);toastTimer=setTimeout(()=>e.remove(),2600)}
+function notify(t,b){if("Notification"in window&&Notification.permission==="granted")try{new Notification(t,{body:b,tag:t})}catch(e){}}
+function prime(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume()}catch(e){}}
+function beep(freq=880,dur=.8){prime();if(!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.connect(g);g.connect(audioCtx.destination);let t=audioCtx.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.02)}
+const ADHAN="https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg";
+const FAJR="https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg";
+function playAdhan(fajr=false){let a=new Audio(fajr?FAJR:ADHAN);a.volume=.9;a.play().catch(()=>toast("Audio blocked — tap Test Adhan once in Settings."))}
+async function enableAlarms(){d.alarms=true;save();prime();if("Notification"in window&&Notification.permission==="default")try{await Notification.requestPermission()}catch(e){};toast("Reminders enabled");render()}
+function testAlarm(){beep();notify("🔔 Salah reminder","Prayer time is approaching.");toast("Alarm tested")}
+function testAdhan(){prime();playAdhan();toast("Adhan test started")}
+function timeObj(t,day=todayKey()){return zonedDate(day,t)}
+function localName(){return d.city+(d.lat? " • GPS": "")}
+function getCoords(){return d.lat&&d.lon?[d.lat,d.lon]:CITY[d.city]?.slice(0,2)||CITY.Karachi.slice(0,2)}
+function methodId(){return d.method||1}
+async function fetchTimes(silent=false){
+ let [lat,lon]=getCoords(),dateKey=locationDateKey(),date=`${dateKey.slice(8,10)}-${dateKey.slice(5,7)}-${dateKey.slice(0,4)}`;
+ try{
+  const makeUrl=(day)=>`https://api.aladhan.com/v1/timings/${day}?latitude=${lat}&longitude=${lon}&method=${methodId()}&school=${d.madhab==="Hanafi"?1:0}&tune=0,0,0,${d.customTune||0},0,0,0,0,0`;
+  let r=await fetch(makeUrl(date));let j=await r.json();let t=j?.data?.timings;
+  if(!t)throw Error("No timing data");
+
+  // When GPS is being used, AlAdhan returns the authoritative timezone for
+  // the exact coordinates. If the saved/device timezone crosses midnight
+  // differently, request the correct local calendar date once more.
+  const apiTz=j?.data?.meta?.timezone||"";
+  if(apiTz && d.lat!=null){
+    const localKey=new Intl.DateTimeFormat("en-CA",{timeZone:apiTz,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+    if(localKey!==dateKey){
+      dateKey=localKey;
+      date=`${dateKey.slice(8,10)}-${dateKey.slice(5,7)}-${dateKey.slice(0,4)}`;
+      r=await fetch(makeUrl(date));j=await r.json();t=j?.data?.timings;
+      if(!t)throw Error("No timing data for local date");
+    }
+    d.timezone=apiTz;
+  }
+
+  d.prayers={Fajr:t.Fajr,Dhuhr:t.Dhuhr,Asr:t.Asr,Maghrib:t.Maghrib,Isha:t.Isha,Sunrise:t.Sunrise,Sunset:t.Sunset,Midnight:t.Midnight};
+  d.hijri=j.data.date.hijri;d.greg=j.data.date.gregorian;d.timezone=j?.data?.meta?.timezone||d.timezone||locationTimeZone();d.lastFetch=Date.now();save();render();if(!silent)toast("Prayer times updated");
+ }catch(e){if(!silent)toast("Could not update online times; using saved/default times.");if(!d.prayers.Fajr)fallbackTimes()}
+}
+function fallbackTimes(){let x={Karachi:["05:10","12:45","16:10","18:55","20:25"],Lahore:["05:00","12:35","16:00","18:45","20:15"],Islamabad:["04:55","12:30","15:55","18:40","20:10"],Makkah:["04:30","12:15","15:45","18:30","20:00"],Madinah:["04:45","12:20","15:50","18:35","20:05"],Riyadh:["04:15","12:00","15:30","18:15","19:45"],Dubai:["04:55","12:25","15:55","18:40","20:10"],London:["05:45","13:00","16:15","19:00","20:30"],"New York":["05:00","12:55","16:45","19:30","21:00"]};let a=x[d.city]||x.Karachi;d.prayers=Object.fromEntries(PR.map((p,i)=>[p,a[i]]))}
+function t(p){return d.prayers[p]||fallbackTimes()||"--:--"}
+function rec(p,day=todayKey()){return d.records.find(x=>x.date===day&&x.prayer===p)}
+function setRec(p,status,r=""){d.records=d.records.filter(x=>!(x.date===todayKey()&&x.prayer===p));d.records.push({date:todayKey(),prayer:p,status,recovery:"none",reason:r,time:Date.now()});save();render()}
+function status(p){let r=rec(p);if(r)return r.status==="completed"?"completed":r.recovery==="completed"?"recovered":r.recovery==="planned"?"planned":"missed";let x=timeObj(t(p));return x&&x<new Date()?"missed":"upcoming"}
+function completed(){return PR.filter(p=>{let s=status(p);return s==="completed"||s==="recovered"}).length}
+function missed(){return d.records.filter(x=>x.status==="missed")}
+function nextPrayer(){let now=new Date(),best=null;PR.forEach(p=>{let x=timeObj(t(p));if(x&&x>now&&(!best||x<best.time))best={p,time:x}});return best}
+function countdown(){let n=nextPrayer();if(!n)return"All prayers have passed — tomorrow is next.";let ms=n.time-new Date(),m=Math.max(0,Math.floor(ms/60000)),h=Math.floor(m/60);m%=60;return`${n.p} in ${h?`${h}h `:""}${m}m`}
+function streak(){let set=new Set(d.records.filter(x=>x.status==="completed").map(x=>x.date));let cur=0,dt=new Date();while(true){let k=dt.toLocaleDateString("en-CA");if(!set.has(k))break;cur++;dt.setDate(dt.getDate()-1)}return cur}
+function score(){let total=d.records.length,good=d.records.filter(x=>x.status==="completed").length;return total?Math.round(good/total*100):0}
+function qiblaBearing(lat,lon){let ka=21.4225*Math.PI/180,ko=39.8262*Math.PI/180,la=lat*Math.PI/180,lo=lon*Math.PI/180;let y=Math.sin(ko-lo),x=Math.cos(la)*Math.tan(ka)-Math.sin(la)*Math.cos(ko-lo);return(Math.atan2(y,x)*180/Math.PI+360)%360}
+let compassHeading=null,compassListening=false;
+function onCompass(e){
+  let h=null;
+  if(typeof e.webkitCompassHeading==="number"&&isFinite(e.webkitCompassHeading)) h=e.webkitCompassHeading;
+  else if(typeof e.alpha==="number"&&isFinite(e.alpha)) h=(360-e.alpha)%360;
+  if(h==null)return;
+  compassHeading=(h+360)%360;
+  if(page==="tools"&&toolTab==="qibla")render();
+}
+async function enableCompass(){
+  try{
+    if(typeof DeviceOrientationEvent==="undefined"){toast("Phone compass is not available in this browser.");return}
+    if(typeof DeviceOrientationEvent.requestPermission==="function"){
+      const p=await DeviceOrientationEvent.requestPermission();
+      if(p!=="granted"){toast("Compass permission was not granted.");return}
+    }
+    if(!compassListening){
+      window.addEventListener("deviceorientationabsolute",onCompass,true);
+      window.addEventListener("deviceorientation",onCompass,true);
+      compassListening=true;
+    }
+    toast("Compass enabled — move the phone in a figure-8 to calibrate.");
+    if(page==="tools"&&toolTab==="qibla")render();
+  }catch(e){toast("Compass could not be enabled on this device.");}
+}
+function locationName(){return d.lat?`${d.city} • GPS location`:`${d.city} • saved city`}
+function nav(x){page=x;modal=null;render();window.scrollTo(0,0)}
+function shell(content){return`<div class="app"><header class="top"><div><div class="title">Salah Recovery <span class="badge">PRO</span></div><div class="muted">${new Date().toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})} · ${esc(locationName())}</div></div><button class="btn soft mini" onclick="toggleTheme()">${d.theme==="dark"?"☀️":"🌙"}</button></header>${content}<nav class="nav">${[["today","🏠","Home"],["recovery","🤲","Recovery"],["tools","🧭","Tools"],["insights","📊","Insights"],["settings","⚙️","Settings"]].map(a=>`<button class="${page===a[0]?"active":""}" onclick="nav('${a[0]}')"><span>${a[1]}</span>${a[2]}</button>`).join("")}</nav>${modalHtml()}</div>`}
+function today(){
+ let c=completed(),pct=Math.round(c/5*100),n=nextPrayer(),st=streak(),sc=score();
+ return `<section class="card hero"><div class="muted">Today’s Salah Journey</div><h2 style="font-size:31px;margin-top:3px">${c}/5</h2><div class="progress"><i style="width:${pct}%"></i></div><div style="margin-top:8px">${pct}% complete · ${st?`🔥 ${st} day streak`:"Start your streak today"}</div><div class="muted" style="margin-top:7px">Consistency score: ${sc}%</div></section>
+ <section class="card"><div class="row"><div><div class="muted">NEXT PRAYER</div><b style="font-size:22px">${n?n.p:"Tomorrow"}</b><div class="muted">${n?t(n.p):"Schedule complete"}</div><div class="countdown" id="countdown">${countdown()}</div></div><div style="text-align:right"><div class="count">${n?"⏳":"✓"}</div><button class="btn soft mini" onclick="fetchTimes()">↻ Refresh</button></div></div></section>
+ <section class="card alarm"><div class="row"><div><b>🔔 Smart reminders</b><div class="muted">${d.alarms?`${d.lead} min before · ${d.adhan?"Adhan at time":"silent at time"}`:"Reminders are off"}</div></div><button class="btn ${d.alarms?"primary":"soft"} mini" onclick="enableAlarms()">${d.alarms?"Enabled":"Enable"}</button></div></section>
+ <section class="card"><div class="row"><h3>Today’s prayers</h3><span class="badge">${d.lastFetch?"Live times":"Fallback times"}</span></div>${PR.map(p=>{let s=status(p),lab=s==="completed"?"Completed ✓":s==="recovered"?"Recovered ✓":s==="planned"?"Recovery planned":s==="missed"?"Missed":"Upcoming";return`<div class="prayer" onclick="openPrayer('${p}')"><div class="pname"><div class="icon">${ICON[p]}</div><div><b>${p}</b><div class="muted">${t(p)}</div></div></div><span class="status ${s==="completed"?"done":s==="missed"?"missed":s==="upcoming"?"upcoming":"planned"}">${lab}</span></div>`}).join("")}</section>
+ <section class="card"><div class="row"><div><b>Quick actions</b><div class="muted">Small actions, big consistency.</div></div></div><div class="grid2" style="margin-top:10px"><button class="btn soft" onclick="openNote()">📝 Daily reflection</button><button class="btn soft" onclick="nav('tools')">🧭 Qibla & Tasbih</button></div></section>`;
+}
+function openPrayer(p){selected=p;reason=rec(p)?.reason||"";modal="prayer";render()}
+function recovery(){
+ let all=missed().sort((a,b)=>b.date.localeCompare(a.date)),pending=all.filter(x=>x.recovery!=="completed"),done=all.filter(x=>x.recovery==="completed");
+ return `<h2 style="padding:10px 14px 0">Recovery Center</h2><p class="muted" style="padding:4px 14px 8px">A calm, private way to organize missed prayers without guilt.</p>
+ <section class="card hero"><div class="muted">Recovery progress</div><h2>${done.length}/${all.length}</h2><div class="progress"><i style="width:${all.length?done.length/all.length*100:0}%"></i></div><div style="margin-top:8px">${pending.length?`${pending.length} still need attention`:"No pending recovery items 🎉"}</div></section>
+ ${!all.length?`<div class="card empty">🎉 No missed prayers recorded.<br><span class="muted">Keep protecting the next prayer.</span></div>`:`<section class="card">${all.map(r=>`<div class="prayer"><div><b>${r.prayer}</b><div class="muted">${fmt(r.date)} · ${esc(r.reason||"No reason")}</div><span class="status ${r.recovery==="completed"?"done":"planned"}">${r.recovery==="completed"?"Recovered ✓":"Needs recovery"}</span></div>${r.recovery==="completed"?`<span>✓</span>`:`<div style="text-align:right"><button class="btn soft mini" onclick="recover('${r.date}','${r.prayer}','planned')">Plan</button><button class="btn primary mini" onclick="recover('${r.date}','${r.prayer}','completed')">Done</button></div>`}</div>`).join("")}</section>`}`
+}
+function recover(day,p,mode){let r=d.records.find(x=>x.date===day&&x.prayer===p);if(r){r.recovery=mode;save();render();toast(mode==="completed"?"Recovery marked complete":"Recovery plan saved")}}
+function tools(){
+ let [lat,lon]=getCoords(),bearing=qiblaBearing(lat,lon),angle=d.qibla||bearing;
+ return `<h2 style="padding:10px 14px 0">Tools</h2><div class="tabs"><button class="sel" onclick="toolTab='qibla';render()">🧭 Qibla</button><button onclick="toolTab='tasbih';render()">📿 Tasbih</button><button onclick="toolTab='duas';render()">🤲 Duas</button></div>${toolTab==="tasbih"?tasbih():toolTab==="duas"?duas():qibla(bearing)}`;
+}
+let toolTab="qibla";
+function qibla(b){
+  const relative=compassHeading==null?b:((b-compassHeading+540)%360)-180;
+  return`<section class="card center"><div class="muted">QIBLA DIRECTION</div><h2>${Math.round(b)}° from North</h2><div class="qibla"><div class="compassN">N</div><div class="needle" style="transform:rotate(${relative}deg)">↑</div></div><p class="muted">${d.lat?`Based on your GPS coordinates.`:"Using your selected city. Enable GPS for a more precise bearing."}</p><div class="actions"><button class="btn primary" onclick="getGPS()">📍 Use my location</button><button class="btn soft" onclick="enableCompass()">🧭 Enable compass</button></div><p class="muted" style="margin-top:8px">${compassHeading==null?"Compass not connected — the arrow shows the Qibla bearing from North.":"Live compass active — rotate the phone until the arrow points forward."}</p></section><section class="card"><h3>How it helps</h3><p class="muted" style="margin-top:7px">The direction is calculated as the initial bearing from your location to the Kaaba in Makkah. The live compass uses your phone's orientation when the browser provides it.</p></section>`}
+function tasbih(){return`<section class="card center"><div class="muted">DIGITAL TASBIH</div><div class="tasbih">${d.tasbih||0}</div><button class="tap" onclick="d.tasbih=(d.tasbih||0)+1;save();render()">Tap to count</button><div class="actions"><button class="btn soft" onclick="d.tasbih=0;save();render()">Reset</button><button class="btn primary" onclick="navigator.vibrate?.([30,20,30])">Vibrate</button></div></section><section class="card"><div class="row"><b>Suggested cycle</b><span class="badge">33 × 3</span></div><p class="muted" style="margin-top:7px">Use the counter for your personal dhikr routine.</p></section>`}
+function duas(){return`<section class="card">${DUAS.map(x=>`<div class="feature"><div class="featureIcon">🤲</div><div><b>${esc(x[0])}</b><div style="margin-top:4px">${esc(x[1])}</div><div class="muted rtl" style="margin-top:5px">${esc(x[2])}</div></div></div>`).join("")}</section>`}
+function insights(){
+ let rs=d.records, by=Object.fromEntries(PR.map(p=>[p,{c:0,m:0}]));rs.forEach(r=>{if(by[r.prayer])r.status==="completed"?by[r.prayer].c++:r.status==="missed"&&by[r.prayer].m++});
+ let top=Object.entries(by).map(([p,x])=>[p,x.c+x.m?Math.round(x.c/(x.c+x.m)*100):0]).sort((a,b)=>b[1]-a[1]);let reasonCounts={};rs.filter(x=>x.status==="missed").forEach(x=>reasonCounts[x.reason]=(reasonCounts[x.reason]||0)+1);let obstacle=Object.entries(reasonCounts).sort((a,b)=>b[1]-a[1])[0];
+ return`<h2 style="padding:10px 14px">Insights</h2><section class="card"><div class="grid3"><div class="stat"><b>${score()}%</b><span class="muted">Score</span></div><div class="stat"><b>${streak()}</b><span class="muted">Current streak</span></div><div class="stat"><b>${missed().length}</b><span class="muted">Missed logged</span></div></div></section><section class="card"><h3>Prayer-by-prayer</h3>${top.map(x=>`<div style="margin:15px 0"><div class="row"><span>${x[0]}</span><b>${x[1]}%</b></div><div class="bar" style="margin-top:6px"><i style="width:${x[1]}%"></i></div></div>`).join("")}</section>${obstacle?`<section class="card"><h3>🧠 Your biggest obstacle</h3><p style="margin-top:7px"><b>${esc(obstacle[0])}</b> · ${obstacle[1]} logged time${obstacle[1]>1?"s":""}</p><p class="muted" style="margin-top:5px">Try one tiny environmental change before the next prayer.</p></section>`:""}<section class="card"><h3>🎯 Smart challenge</h3><p style="margin:7px 0 12px">Your next upgrade is not perfection. Protect the <b>${top[0]?.[0]||"next"} prayer</b> today.</p><button class="btn primary" onclick="openNote('challenge')">Set my intention</button></section>`;
+}
+function history(){
+ let days=[...new Set(d.records.map(x=>x.date))].sort().reverse();return`<h2 style="padding:10px 14px">History</h2>${days.length?days.map(day=>{let rs=d.records.filter(x=>x.date===day),c=rs.filter(x=>x.status==="completed").length,m=rs.filter(x=>x.status==="missed").length;return`<section class="card"><div class="row"><b>${fmt(day)}</b><span class="muted">${c} completed · ${m} missed</span></div><div class="muted" style="margin-top:8px">${rs.map(r=>`${r.prayer} ${r.status==="completed"?"✓":"×"}`).join(" · ")}</div></section>`}).join(""):`<div class="card empty">No history yet.</div>`}<section class="card"><button class="btn soft" style="width:100%" onclick="exportData()">⬇️ Export my backup</button></section>`;
+}
+function countriesLocationSelect(locCities){return `<optgroup label="🌍 All countries / capitals">${countryLocationOptions()}</optgroup><optgroup label="🏙️ Saved city locations">${locCities}</optgroup>`}
+function settings(){
+ let locCities=Object.keys(CITY).map(x=>`<option value="city:${esc(x)}" ${x===d.city?"selected":""}>${esc(x)}${CITY[x][2]?` — ${esc(CITY[x][2])}`:""}</option>`).join("");let loc=countriesLocationSelect(locCities);let countries=COUNTRIES.map(c=>`<option ${c[0]===d.country?"selected":""}>${esc(c[0])}</option>`).join("");let currentCountry=countryInfo();let allowedLangs=countryLangs(currentCountry);let langs=allowedLangs.map(k=>`<option value="${k}" ${d.lang===k?"selected":""}>${esc(LANG_NAMES[k]||k)}</option>`).join("");
+ return`<h2 style="padding:10px 14px">Settings</h2><section class="card"><label>Country / Islamic region<select onchange="applyCountry(this.value)">${countries}</select></label><label>Language<select onchange="d.lang=this.value;d.langMode='manual';save();render()">${langs}</select></label><label>Location<select onchange="applyLocation(this.value)">${loc}</select><span class="muted">All countries are available above; selecting a country uses its capital as the prayer-time location.</span></label><div class="actions"><button class="btn primary" onclick="getGPS()">📍 Detect GPS</button><button class="btn soft" onclick="fetchTimes()">↻ Update times</button></div><label style="display:block;margin-top:13px">Calculation method<select onchange="d.method=+this.value;save();fetchTimes(true)"><option value="1" ${d.method==1?"selected":""}>University of Islamic Sciences, Karachi</option><option value="3" ${d.method==3?"selected":""}>Muslim World League</option><option value="4" ${d.method==4?"selected":""}>Umm Al-Qura, Makkah</option><option value="5" ${d.method==5?"selected":""}>Egyptian General Authority</option><option value="7" ${d.method==7?"selected":""}>Tehran</option><option value="13" ${d.method==13?"selected":""}>Turkey</option><option value="16" ${d.method==16?"selected":""}>Dubai</option></select></label><label style="display:block;margin-top:13px">Asr juristic school<select onchange="d.madhab=this.value;save();fetchTimes(true)"><option ${d.madhab==="Hanafi"?"selected":""}>Hanafi</option><option ${d.madhab==="Shafi"?"selected":""}>Shafi</option></select></label></section>
+ <section class="card"><h3>🔔 Alarm & Adhan</h3><div class="toggle"><div><b>Pre-prayer reminder</b><div class="muted">Alarm + notification before each prayer.</div></div><button class="switch ${d.alarms?"on":""}" onclick="d.alarms=!d.alarms;save();render();if(d.alarms)enableAlarms()"><i></i></button></div><div class="toggle"><div><b>Adhan at prayer time</b><div class="muted">Uses a separate audio track.</div></div><button class="switch ${d.adhan?"on":""}" onclick="d.adhan=!d.adhan;save();render()"><i></i></button></div><div class="toggle"><div><b>Different Fajr Adhan</b><div class="muted">Use Fajr-specific audio when available.</div></div><button class="switch ${d.fajrAdhan?"on":""}" onclick="d.fajrAdhan=!d.fajrAdhan;save();render()"><i></i></button></div><label style="display:block;padding-top:12px">Reminder lead time<select onchange="d.lead=+this.value;save();render()">${[5,10,15,20,30].map(n=>`<option ${d.lead===n?"selected":""}>${n}</option>`).map((x,i)=>x.replace(">",">")).join("")}</select><span class="muted">minutes before prayer</span></label><div class="actions"><button class="btn soft" onclick="testAlarm()">🔔 Test alarm</button><button class="btn primary" onclick="testAdhan()">🕌 Test Adhan</button></div><p class="muted" style="margin-top:9px">Important: browser alarms are most reliable while the page is open. Android/iOS can suspend background web pages; a native app is needed for guaranteed locked-screen alarms.</p></section>
+ <section class="card"><h3>✨ Focus mode</h3><div class="toggle"><div><b>Prayer focus</b><div class="muted">Keeps screen awake while you prepare and pray.</div></div><button class="switch ${d.focus?"on":""}" onclick="toggleFocus()"><i></i></button></div></section>
+ <section class="card"><h3>💾 Your data</h3><p class="muted" style="margin:7px 0 12px">Your records stay in this browser. Export a backup before changing phones.</p><div class="grid2"><button class="btn soft" onclick="exportData()">Export</button><button class="btn soft" onclick="document.getElementById('importFile').click()">Import</button></div><input id="importFile" class="hide" type="file" accept=".json" onchange="importData(this)"></section>
+ <section class="card"><h3>About this app</h3><div class="feature"><div class="featureIcon">🔐</div><div><b>Private by design</b><div class="muted">Prayer tracking is stored locally.</div></div></div><div class="feature"><div class="featureIcon">🌍</div><div><b>Live prayer times</b><div class="muted">Uses AlAdhan’s calculation API when online.</div></div></div><div class="feature"><div class="featureIcon">🧭</div><div><b>Qibla direction</b><div class="muted">Calculated toward the Kaaba from your selected location.</div></div></div></section>
+ <section class="card"><button class="btn danger" style="width:100%" onclick="if(confirm('Delete all local Salah Recovery data?')){localStorage.removeItem('salah_recovery_pro_v5');location.reload()}">Delete all data</button></section>`;
+}
+function openNote(kind="daily"){modal="note";selected=kind;render()}
+function saveNote(){let x=document.getElementById("noteText").value.trim();if(x)d.notes.push({date:todayKey(),kind:selected,text:x,time:Date.now()});save();modal=null;render();toast("Reflection saved")}
+function modalHtml(){
+ if(!modal)return"";
+ if(modal==="prayer"){let s=status(selected);return`<div class="modal" onclick="if(event.target===this){modal=null;render()}"><div class="sheet"><div class="row"><h2>${selected}</h2><span class="badge">${t(selected)}</span></div><p class="muted" style="margin-top:7px">${s==="upcoming"?"Mark it completed after praying.":s==="missed"?"If you missed it, log the reason and create a recovery plan.":"This prayer is already tracked."}</p>${s==="upcoming"?`<div class="actions"><button class="btn soft" onclick="modal=null;render()">Cancel</button><button class="btn primary" onclick="setRec('${selected}','completed');modal=null;render();toast('Alhamdulillah — prayer completed')">Complete ✓</button></div>`:s==="missed"?`<div class="actions"><button class="btn soft" onclick="modal=null;render()">Close</button><button class="btn primary" onclick="modal='reason';render()">Log missed prayer</button></div>`:`<button class="btn soft" style="width:100%;margin-top:12px" onclick="modal=null;render()">Close</button>`}</div></div>`}
+ if(modal==="reason")return`<div class="modal"><div class="sheet"><h2>What got in the way?</h2><p class="muted" style="margin:6px 0 10px">No judgement. This is for pattern awareness.</p>${REASONS.map(x=>`<div class="option ${reason===x?"sel":""}" onclick="reason='${x.replace(/'/g,"\\'")}';render()">${x}${reason===x?" ✓":""}</div>`).join("")}<div class="actions"><button class="btn soft" onclick="modal=null;render()">Cancel</button><button class="btn danger" ${reason?"":"disabled"} onclick="setRec('${selected}','missed',reason);modal=null;render();toast('Logged — recovery is available in Recovery Center')">Mark missed</button></div></div></div>`;
+ if(modal==="note")return`<div class="modal"><div class="sheet"><h2>${selected==="challenge"?"🎯 Today’s intention":"📝 Daily reflection"}</h2><p class="muted" style="margin:6px 0">Keep it short and honest.</p><textarea id="noteText" placeholder="${selected==="challenge"?"Example: I will protect Maghrib today.":"What helped or challenged you today?"}"></textarea><div class="actions"><button class="btn soft" onclick="modal=null;render()">Cancel</button><button class="btn primary" onclick="saveNote()">Save</button></div></div></div>`;
+}
+function getGPS(){
+ if(!navigator.geolocation){toast("GPS is not available in this browser");return}
+ toast("Requesting your location…");navigator.geolocation.getCurrentPosition(async pos=>{
+   d.lat=pos.coords.latitude;d.lon=pos.coords.longitude;d.city="My location";
+   d.qibla=qiblaBearing(d.lat,d.lon);
+   save();await fetchTimes(true);save();render();toast("GPS location applied — prayer times and Qibla updated");
+ },()=>toast("Location permission denied — using selected city."),{enableHighAccuracy:true,timeout:10000,maximumAge:300000});
+}
+function toggleTheme(){d.theme=d.theme==="dark"?"light":"dark";save();render()}
+async function toggleFocus(){d.focus=!d.focus;save();if(d.focus&&"wakeLock"in navigator){try{wake=await navigator.wakeLock.request("screen");toast("Focus mode on")}catch(e){toast("Focus mode on")} }else if(wake){try{await wake.release()}catch(e){}wake=null}render()}
+function exportData(){let blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`salah-recovery-backup-${todayKey()}.json`;a.click();URL.revokeObjectURL(a.href);toast("Backup exported")}
+function importData(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x||!Array.isArray(x.records))throw 0;d={...d,...x};save();render();toast("Backup imported")}catch(e){toast("Invalid backup file")}};r.readAsText(f)}
+function checkAlarms(){
+ if(!d.alarms)return;let now=new Date(),day=todayKey();
+ PR.forEach(p=>{let x=timeObj(t(p));if(!x)return;let diff=x-now,pre=day+"-pre-"+p,ad=day+"-ad-"+p;
+ if(diff>0&&diff<=d.lead*60000&&lastAlarmKey!==pre){lastAlarmKey=pre;beep(880,.9);notify("🔔 "+p+" soon",`${p} is in about ${Math.max(1,Math.ceil(diff/60000))} minutes.`)}
+ if(Math.abs(diff)<=30000&&lastAdhanKey!==ad){lastAdhanKey=ad;notify("🕌 "+p,`It is time for ${p}.`);if(d.adhan)playAdhan(p==="Fajr"&&d.fajrAdhan)}})
+}
+function onboarding(){return`<div style="min-height:100vh;display:grid;place-items:center;padding:22px"><section class="card" style="margin:0;width:100%;padding:28px;text-align:center"><div style="font-size:58px">🤲</div><h1 style="margin:10px 0 7px">Salah Recovery <span class="badge">PRO</span></h1><p class="muted">A private companion for prayer consistency, missed-salah recovery, Qibla, reminders and reflection.</p><label style="display:block;text-align:left;margin-top:22px">Choose your country<select id="ocountry">${COUNTRIES.map(c=>`<option>${esc(c[0])}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Choose your city<select id="ocity">${Object.keys(CITY).filter(x=>x!=="New York").map(x=>`<option>${x}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Asr school<select id="omadhab"><option>Hanafi</option><option>Shafi</option></select></label><button class="btn primary" style="width:100%;margin-top:16px" onclick="applyCountry(ocountry.value);d.city=ocity.value;d.lat=null;d.lon=null;d.madhab=omadhab.value;d.onboard=true;save();fetchTimes(true);render()">Begin my journey →</button><p class="small muted" style="margin-top:13px">You can change location, calculation method and alarm settings later.</p></section></div>`}
+function render(){document.body.className=d.theme==="dark"?"dark":"";document.getElementById("root").innerHTML=d.onboard?shell(page==="today"?today():page==="recovery"?recovery():page==="tools"?tools():page==="insights"?insights():page==="history"?history():settings()):onboarding()}
+setInterval(()=>{checkAlarms();let e=document.getElementById("countdown");if(e)e.textContent=countdown()},15000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkAlarms();if(d.focus&&"wakeLock"in navigator&&!wake)toggleFocus()}});
+render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date.now()-d.lastFetch>12*3600000)fetchTimes(true)}
+</script>
+<script id="salah-advanced-addon-js">
+/* SALAH RECOVERY — ADVANCED PRAYER COMMAND CENTER
+   Additive layer only: the original app markup, logic and data are left intact. */
+(function(){
+  const OLD_RENDER=window.render;
+  const ADHAN_URL='https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg';
+  const FAJR_URL=ADHAN_URL;
+  const ADV_KEY='salah_recovery_advanced_v3';
+  d.adv ||= {enabled:true,prep:true,preAlert2:true,soundLevel:.95,snooze:5,quiet:false,vibrate:true,smart:true,notify:true,adhan:true,autoSchedule:true,voiceFallback:true};
+  try{const z=JSON.parse(localStorage.getItem(ADV_KEY)||'null');if(z)d.adv={...d.adv,...z}}catch(e){}
+  function advSave(){try{localStorage.setItem(ADV_KEY,JSON.stringify(d.adv))}catch(e){}}
+  function vib(p=[90,50,90]){if(d.adv.vibrate&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}}
+  async function askNotify(){if(!('Notification'in window)){toast('Notifications are not supported in this browser.');return}try{let r=await Notification.requestPermission();d.adv.notify=r==='granted';advSave();toast(r==='granted'?'Notifications enabled':'Notification permission not granted');render()}catch(e){toast('Notification permission could not be requested.')}}
+  function notify2(title,body){if(d.adv.notify&&'Notification'in window&&Notification.permission==='granted'){try{new Notification(title,{body,tag:'salah-'+todayKey()})}catch(e){}}}
+  let currentAudio=null;
+  function playAdhan(){
+    try{
+      if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
+      currentAudio=new Audio(ADHAN_URL);currentAudio.preload='auto';currentAudio.volume=Math.max(0,Math.min(1,+d.adv.soundLevel||.95));
+      const q=currentAudio.play(); if(q&&q.catch)q.catch(()=>toast('Browser ne background audio block ki. Test Adhan button ko ek dafa tap karein.'));
+      vib([120,70,120,70,220]); return currentAudio;
+    }catch(e){toast('Adhan audio unavailable.')} 
+  }
+  function speakFallback(name){
+    if(!d.adv.voiceFallback||!('speechSynthesis'in window))return;
+    try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Allahu Akbar. It is time for '+name+' prayer.');u.lang='en-US';u.rate=.78;u.volume=1;speechSynthesis.speak(u)}catch(e){}
+  }
+  window.advTestAdhan=function(){prime();playAdhan();toast('🕌 Adhan test started')}
+  window.advAskNotify=askNotify;
+  window.advStopAdhan=function(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}try{speechSynthesis.cancel()}catch(e){}if(navigator.vibrate)try{navigator.vibrate(0)}catch(e){}}
+  window.advSnooze=function(p){const mins=Number(d.adv.snooze)||5;d.advSnooze={p,until:Date.now()+mins*60000};advSave();toast(p+' reminder snoozed for '+mins+' min');render()}
+  function next(){try{return typeof nextPrayer==='function'?nextPrayer():null}catch(e){return null}}
+  function diffText(ms){if(ms<=0)return 'Now';let m=Math.floor(ms/60000),h=Math.floor(m/60);m%=60;return h?`${h}h ${m}m`:`${m}m`}
+  window.advOpen=function(){
+    document.getElementById('advModal')?.remove();
+    const n=next();
+    const perm=('Notification'in window)?Notification.permission:'unsupported';
+    const html=`<div class="adv-modal" id="advModal" onclick="if(event.target===this)this.remove()"><div class="adv-sheet">
+      <div class="row"><div><h2 style="margin:0">🕌 Prayer Command Center</h2><div class="muted">Advanced prayer alerts + Adhan. Original features remain untouched.</div></div><button class="btn soft mini" onclick="this.closest('.adv-modal').remove()">Close</button></div>
+      ${n?`<div class="adhan-player pulse"><div class="muted">NEXT PRAYER</div><div class="countdown-big">${esc(n.p)}</div><b>${esc(t(n.p))}</b><div class="muted" style="margin-top:5px">${diffText(n.time-new Date())} remaining</div><div class="actions"><button class="btn soft" onclick="advSnooze('${esc(n.p)}')">⏰ Snooze ${d.adv.snooze}m</button><button class="btn primary" onclick="advTestAdhan()">🕌 Test Adhan</button></div></div>`:`<div class="adhan-player">Today’s prayers are complete.</div>`}
+      <div class="adv-row"><div><b>🔔 Prayer-time Adhan</b><div class="adv-note">Play the Adhan at the exact prayer time when the browser is allowed to run audio.</div></div><button class="switch ${d.adv.adhan?'on':''}" onclick="d.adv.adhan=!d.adv.adhan;advSave();render()"><i></i></button></div>
+      <div class="adv-row"><div><b>⏳ Smart preparation alert</b><div class="adv-note">Extra 2-minute preparation cue in addition to the original reminder.</div></div><button class="switch ${d.adv.preAlert2?'on':''}" onclick="d.adv.preAlert2=!d.adv.preAlert2;advSave();render()"><i></i></button></div>
+      <div class="adv-row"><div><b>📳 Haptic cue</b><div class="adv-note">Vibration pattern for preparation and prayer-time alerts.</div></div><button class="switch ${d.adv.vibrate?'on':''}" onclick="d.adv.vibrate=!d.adv.vibrate;advSave();render()"><i></i></button></div>
+      <div class="adv-row"><div><b>📲 System notifications</b><div class="adv-note">Permission: ${esc(perm)}</div></div><button class="btn soft mini" onclick="advAskNotify()">Enable</button></div>
+      <div class="adv-row"><div style="width:100%"><b>🔊 Adhan volume</b><input class="range" type="range" min="0" max="1" step=".05" value="${d.adv.soundLevel}" oninput="d.adv.soundLevel=+this.value;advSave()"></div></div>
+      <div class="adv-row"><div style="width:100%"><b>⏰ Snooze duration</b><select onchange="d.adv.snooze=+this.value;advSave()"><option value="3" ${d.adv.snooze==3?'selected':''}>3 minutes</option><option value="5" ${d.adv.snooze==5?'selected':''}>5 minutes</option><option value="10" ${d.adv.snooze==10?'selected':''}>10 minutes</option><option value="15" ${d.adv.snooze==15?'selected':''}>15 minutes</option></select></div></div>
+      <div class="adv-row"><div><b>🌙 Quiet mode</b><div class="adv-note">Silences only the new advanced layer. Your original app controls are unchanged.</div></div><button class="switch ${d.adv.quiet?'on':''}" onclick="d.adv.quiet=!d.adv.quiet;advSave();render()"><i></i></button></div>
+      <div class="actions"><button class="btn soft" onclick="advStopAdhan()">⏹ Stop Adhan</button><button class="btn primary" onclick="advAskNotify()">🔔 Allow alerts</button></div>
+      <p class="adv-note" style="margin-bottom:0">Web browsers can suspend background JavaScript/audio when the screen is locked. For true OS-level alarms while the app is closed, this same interface should later be packaged as a native Android app/PWA with an alarm service.</p>
+    </div></div>`;
+    document.body.insertAdjacentHTML('beforeend',html);
+  }
+  function inject(){
+    const root=document.getElementById('root');if(!root||!d.onboard)return;
+    document.getElementById('advancedStrip')?.remove();
+    const n=next();
+    const box=document.createElement('section');box.id='advancedStrip';box.className='advanced-strip';
+    box.innerHTML=`<div class="row"><div><div class="adv-title">✨ Smart Prayer Command Center</div><div class="muted">${n?`Next: ${esc(n.p)} · ${esc(t(n.p))} · ${diffText(n.time-new Date())}`:'Prayer schedule complete'} </div></div><button class="btn primary mini" onclick="advOpen()">Open</button></div><div class="adv-grid"><button class="adv-chip" onclick="advOpen()"><b>⏳ ${n?diffText(n.time-new Date()):'—'}</b><span>Next prayer</span></button><button class="adv-chip" onclick="advTestAdhan()">🕌 <b>Adhan</b><span>Test audio</span></button><button class="adv-chip" onclick="advAskNotify()">🔔 <b>Alerts</b><span>Permission</span></button><button class="adv-chip" onclick="d.adv.quiet=!d.adv.quiet;advSave();render()">🌙 <b>${d.adv.quiet?'Quiet on':'Quiet off'}</b><span>Advanced layer</span></button></div>`;
+    if(page==='today'){const cards=root.querySelectorAll('.card');cards.length?cards[1]?.after(box):root.appendChild(box)}else root.prepend(box);
+  }
+  window.render=function(){OLD_RENDER();setTimeout(inject,0)};
+  const oldCheck=window.checkAlarms;
+  window.checkAlarms=function(){
+    try{oldCheck()}catch(e){}
+    if(!d.onboard||d.adv.quiet)return;
+    const n=next();if(!n)return;
+    const diff=n.time-new Date(), day=todayKey(), p=n.p;
+    const twoKey=day+'-adv2-'+p, adKey=day+'-advadhan-'+p, sno=d.advSnooze;
+    if(sno&&sno.p===p&&Date.now()>=sno.until){delete d.advSnooze;advSave();notify2('🕌 '+p+' prayer reminder','Your snoozed prayer reminder is due now.');beep(900,.8);vib([120,70,220]);toast('Snoozed reminder: '+p);}
+    if(d.adv.preAlert2&&diff>90000&&diff<=120000&&sessionStorage.getItem(twoKey)!=='1'){
+      sessionStorage.setItem(twoKey,'1');beep(660,.55);vib([80,40,80]);notify2('🧭 Prepare for '+p,p+' begins in about 2 minutes.');toast('2-minute preparation: '+p);
+    }
+    if(d.adv.adhan&&Math.abs(diff)<=45000&&sessionStorage.getItem(adKey)!=='1'){
+      sessionStorage.setItem(adKey,'1');notify2('🕌 '+p+' — Adhan',`It is time for ${p}.`);playAdhan()||speakFallback(p);toast('🕌 Adhan: '+p);
+    }
+  };
+  setInterval(()=>{if(d.onboard){checkAlarms();const e=document.getElementById('advancedStrip');if(e&&!document.hidden){const n=next();if(n){const m=e.querySelector('.adv-chip b');if(m)m.textContent=diffText(n.time-new Date())}}}},10000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkAlarms();if(d.onboard)inject()}});
+  advSave();
+  setTimeout(()=>{if(d.onboard)inject()},50);
+})();
+</script>
+</body></html>
