@@ -223,7 +223,7 @@ async function enableRequiredAccess(){
       try{await fetchTimes(true)}catch(e){} save(); resolve();
     },()=>resolve(),{enableHighAccuracy:true,timeout:15000,maximumAge:0}));
   }
-  d.alarms=true; d.adhan=true; save(); scheduleNextAlarms?.();
+  d.alarms=true; d.adhan=true; save(); if(typeof window.scheduleNextAlarms==="function")window.scheduleNextAlarms();
   if(nOK&&lOK) toast("✅ Location + notifications enabled");
   else if(!nOK&&lOK) toast("📍 Location enabled. Notification access is blocked — allow it in browser settings.");
   else if(nOK&&!lOK) toast("🔔 Notifications enabled. Location access was not allowed.");
@@ -233,11 +233,43 @@ async function enableRequiredAccess(){
 function prime(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume()}catch(e){}}
 function beep(freq=880,dur=.8){prime();if(!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.connect(g);g.connect(audioCtx.destination);let t=audioCtx.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.02)}
 const ADHAN="https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg";
-const FAJR="https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg";
-function playAdhan(fajr=false){let a=new Audio(fajr?FAJR:ADHAN);a.volume=.9;a.play().catch(()=>toast("Audio blocked — tap Test Adhan once in Settings."))}
+const FAJR=ADHAN;
+let adhanAudio=null;
+let adhanUnlocked=false;
+function primeAdhan(){
+  try{
+    if(!adhanAudio){adhanAudio=new Audio();adhanAudio.preload="auto";adhanAudio.src=ADHAN;adhanAudio.volume=.95;adhanAudio.load()}
+    return adhanAudio;
+  }catch(e){return null}
+}
+async function unlockAdhan(){
+  const a=primeAdhan();
+  if(!a)return false;
+  try{
+    a.currentTime=0;
+    await a.play();
+    adhanUnlocked=true;
+    a.pause(); a.currentTime=0;
+    try{localStorage.setItem("salah_adhan_unlocked","1")}catch(e){}
+    return true;
+  }catch(e){return false}
+}
+function playAdhan(fajr=false){
+  const a=primeAdhan();
+  if(!a){toast("Adhan audio unavailable");return}
+  a.volume=.95; a.currentTime=0;
+  const q=a.play();
+  if(q&&q.catch)q.catch(()=>toast("Adhan blocked — Settings mein Test Adhan ek dafa tap karein."));
+}
+try{adhanUnlocked=localStorage.getItem("salah_adhan_unlocked")==="1"}catch(e){}
 async function enableAlarms(){d.alarms=true;save();prime();if("Notification"in window&&Notification.permission==="default")try{await Notification.requestPermission()}catch(e){};toast("Reminders enabled");render()}
 function testAlarm(){beep();notify("🔔 Salah reminder","Prayer time is approaching.");toast("Alarm tested")}
-function testAdhan(){prime();playAdhan();toast("Adhan test started")}
+async function testAdhan(){
+  prime();
+  const ok=await unlockAdhan();
+  if(ok){toast("🕌 Adhan unlocked — awaaz check karein");setTimeout(()=>playAdhan(),150)}
+  else toast("Adhan play nahi ho saki. Internet/audio permission check karein.");
+}
 function timeObj(t,day=todayKey()){return zonedDate(day,t)}
 function localName(){return d.locationSource==="gps"&&d.lat!=null&&d.lon!=null?"My location • GPS":`${d.city} • saved location`}
 function getCoords(){if(d.locationSource==="gps"&&d.lat!=null&&d.lon!=null)return[d.lat,d.lon];if(CITY[d.city])return CITY[d.city].slice(0,2);const c=countryInfo();return c?[c[1],c[2]]:CITY.Karachi.slice(0,2)}
