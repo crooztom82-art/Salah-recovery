@@ -1,303 +1,131 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b6b58">
-<meta name="description" content="Salah Recovery Pro — a private prayer, qaza, habit, qibla and reflection companion.">
-<title>Salah Recovery Pro</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#071b16">
+<title>Salah Recovery — Ultimate</title>
 <style>
-:root{
- --bg:#f5f7f6;--surface:#fff;--surface2:#edf3f0;--text:#13201c;--muted:#70807a;
- --primary:#0b6b58;--primary2:#159477;--gold:#c99b3b;--good:#18845f;--bad:#c95353;--warn:#b47c22;
- --line:#dfe8e4;--shadow:0 16px 40px rgba(20,50,43,.08);--r:24px
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:620px;margin:auto;min-height:100vh;padding-bottom:100px}
-.top{padding:18px 17px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-size:22px;font-weight:900;letter-spacing:-.5px}.date{font-size:12px;color:var(--muted);margin-top:2px}.iconbtn{width:44px;height:44px;border:0;border-radius:15px;background:var(--surface);box-shadow:0 5px 18px rgba(0,0,0,.06);color:var(--primary);font-size:20px}
-.page-title{padding:12px 17px 3px;font-size:29px;letter-spacing:-.8px}.sub{padding:0 17px 12px;color:var(--muted);line-height:1.5}
-.card{background:var(--surface);margin:10px 14px;padding:17px;border-radius:var(--r);border:1px solid rgba(0,0,0,.025);box-shadow:var(--shadow)}
-.hero{background:linear-gradient(135deg,#075a4a,#159477);color:#fff;border:0;overflow:hidden;position:relative}.hero:after{content:"";position:absolute;width:170px;height:170px;border:1px solid rgba(255,255,255,.15);border-radius:50%;right:-65px;top:-55px}.hero .muted{color:#d5ece5}.hero h2{font-size:40px;letter-spacing:-1px;margin-top:2px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:800;opacity:.78}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mini{padding:14px;background:var(--surface2);border-radius:18px}.mini b{display:block;font-size:24px;margin-top:2px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:var(--surface2);color:var(--primary);font-size:11px;font-weight:800}.badge{padding:5px 8px;border-radius:999px;font-size:10px;font-weight:850;background:rgba(255,255,255,.16)}
-.progress,.bar{height:9px;border-radius:99px;background:rgba(0,0,0,.08);overflow:hidden}.progress{background:rgba(255,255,255,.2);margin:13px 0 8px}.progress i,.bar i{display:block;height:100%;border-radius:99px;background:var(--primary2)}.hero .progress i{background:#fff}
-.next{display:flex;align-items:center;justify-content:space-between}.nexttime{font-size:26px;font-weight:900}.prayer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px;border-bottom:1px solid var(--line)}.prayer:last-child{border:0}.pname{display:flex;align-items:center;gap:11px}.picon{width:40px;height:40px;border-radius:14px;background:var(--surface2);display:grid;place-items:center;font-size:19px}.ptime{font-size:11px;color:var(--muted);margin-top:2px}.status{font-size:11px;font-weight:850;white-space:nowrap}.done{color:var(--good)}.missed{color:var(--bad)}.planned{color:var(--primary2)}.upcoming,.untracked{color:var(--muted)}
-.btn{border:0;border-radius:14px;padding:10px 14px;font-weight:800}.primary{background:var(--primary);color:#fff}.soft{background:var(--surface2);color:var(--primary)}.gold{background:#f3e7c9;color:#76561b}.danger{background:var(--bad);color:#fff}.tiny{padding:7px 10px;font-size:11px}.full{width:100%}.actions{display:flex;gap:8px;margin-top:12px}.actions>*{flex:1}
-.section-head{display:flex;justify-content:space-between;align-items:center;padding:14px 17px 2px}.section-head h3{font-size:16px}
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;max-width:620px;margin:auto;background:rgba(255,255,255,.95);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom))}.nav button{border:0;background:none;color:#8a9690;font-size:9px;padding:5px 3px;min-width:58px}.nav button.active{color:var(--primary);font-weight:900}.nav span{display:block;font-size:20px;line-height:22px;margin-bottom:2px}
-.tabs{display:flex;gap:7px;overflow:auto;padding:4px 14px 8px}.tabs button{white-space:nowrap;border:0;border-radius:999px;padding:8px 13px;background:var(--surface2);color:var(--muted);font-weight:750}.tabs .sel{background:var(--primary);color:#fff}
-.stat{text-align:center;background:var(--surface2);border-radius:17px;padding:12px 6px}.stat b{display:block;font-size:21px}.stat span{font-size:10px;color:var(--muted)}.metric{padding:12px 0;border-bottom:1px solid var(--line)}.metric:last-child{border:0}
-.empty{text-align:center;padding:28px 10px;color:var(--muted)}.empty .big{font-size:38px;margin-bottom:7px}
-input,select,textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);color:var(--text);margin-top:6px;outline:none}textarea{min-height:82px;resize:vertical}label{display:block;font-size:12px;font-weight:800;margin-bottom:12px}
-.switch{display:flex;justify-content:space-between;align-items:center;gap:12px}.switch input{width:45px;height:25px;margin:0;accent-color:var(--primary)}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.calhead{font-size:10px;color:var(--muted);text-align:center;padding:4px}.day{min-height:45px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-size:12px;position:relative}.day.today{outline:2px solid var(--primary)}.day.good:after,.day.bad:after,.day.partial:after{content:"";width:5px;height:5px;border-radius:50%;position:absolute;bottom:5px}.day.good:after{background:var(--good)}.day.bad:after{background:var(--bad)}.day.partial:after{background:var(--warn)}
-.modal{position:fixed;inset:0;background:rgba(4,15,12,.56);display:flex;align-items:flex-end;z-index:50}.sheet{width:100%;max-width:620px;margin:auto;background:var(--surface);border-radius:28px 28px 0 0;padding:21px;max-height:91vh;overflow:auto}.sheet h2{font-size:23px}.options{display:grid;gap:7px;margin-top:13px}.option{padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.option.sel{border-color:var(--primary);background:var(--surface2)}
-.toast{position:fixed;left:50%;bottom:94px;transform:translateX(-50%);background:var(--text);color:#fff;padding:11px 15px;border-radius:13px;z-index:70;font-size:12px;box-shadow:var(--shadow);max-width:90%;text-align:center}
-.heroBtns{display:flex;gap:8px;margin-top:14px}.heroBtns button{flex:1}.listitem{padding:12px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}.check{width:34px;height:34px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);display:grid;place-items:center;color:var(--good);font-weight:900}.check.on{background:#dff2ea;border-color:#b9dfd0}.qibla{display:grid;place-items:center;text-align:center;padding:16px}.compass{width:190px;height:190px;border-radius:50%;border:10px solid var(--surface2);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;margin:10px auto;position:relative;background:radial-gradient(circle,var(--surface) 0 50%,var(--surface2) 51% 53%,var(--surface) 54%)}.needle{font-size:54px;transform:rotate(var(--angle));transition:transform .3s}.degree{font-size:28px;font-weight:900}.featuregrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.feature{background:var(--surface2);border-radius:18px;padding:15px;min-height:105px}.feature b{display:block;margin-top:9px}.feature span{font-size:11px;color:var(--muted);line-height:1.35}.dark{--bg:#0e1513;--surface:#17201d;--surface2:#202c28;--text:#edf5f1;--muted:#9eafa8;--primary:#73d3b7;--primary2:#49b596;--line:#30403a;--shadow:0 14px 35px rgba(0,0,0,.24)}.dark .nav{background:rgba(23,32,29,.95)}.dark .primary{background:#73d3b7;color:#10211b}.dark .hero{color:#fff}.dark .hero .muted{color:#d5ebe4}.dark .check.on{background:#21463b}
-@media(min-width:700px){body{padding:10px 0}.app{border-radius:28px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.08)}}
+:root{--bg:#071b16;--card:#0d2921;--card2:#12372c;--gold:#e8c56a;--cream:#f6f1df;--muted:#a9c0b7;--green:#2db77b;--danger:#e57373;--line:#21463a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#123b2f 0,#071b16 48%,#04120f 100%);color:var(--cream);font-family:system-ui,-apple-system,Segoe UI,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.app{max-width:900px;margin:auto;padding:18px 16px 40px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:800;font-size:21px}.sub{color:var(--muted);font-size:12px;margin-top:2px}.icon{border:1px solid var(--line);background:var(--card);color:var(--cream);border-radius:14px;padding:10px}
+.hero{margin-top:18px;padding:22px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(145deg,#123b2f,#0b241d);box-shadow:0 15px 45px #0004}.arabic{font-size:25px;color:var(--gold);text-align:right;line-height:1.8}.label{color:var(--muted);font-size:13px}.next{font-size:34px;font-weight:800;margin:5px 0}.count{font-variant-numeric:tabular-nums;color:var(--gold);font-size:24px}.row{display:flex;gap:10px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:14px;padding:12px 15px;font-weight:750}.primary{background:var(--gold);color:#162015}.secondary{background:#ffffff0c;color:var(--cream);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.card{background:#0b251e;border:1px solid var(--line);border-radius:20px;padding:16px}.metric{font-size:27px;font-weight:800}.small{font-size:12px;color:var(--muted)}h2{font-size:18px;margin:22px 3px 10px}.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.prayer{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 8px;text-align:center}.prayer.done{border-color:#2db77b88;background:#10382a}.pname{font-weight:700;font-size:13px}.ptime{font-size:12px;color:var(--muted);margin:4px 0 9px}.check{border:1px solid var(--line);background:#ffffff08;color:var(--cream);border-radius:10px;padding:7px 9px;font-size:12px}.done .check{background:#2db77b;color:#06170f;border-color:#2db77b}.tabs{display:flex;gap:8px;overflow:auto;margin-top:18px}.tab{white-space:nowrap}.panel{display:none}.panel.active{display:block}.progress{height:10px;background:#ffffff0d;border-radius:99px;overflow:hidden;margin:10px 0}.bar{height:100%;width:0;background:var(--green);transition:.3s}.list{display:grid;gap:9px}.setting{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.setting:last-child{border:0}.toggle{width:48px;height:28px;border-radius:99px;background:#ffffff18;border:1px solid var(--line);position:relative}.toggle:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;top:3px;left:3px;background:#aaa;transition:.2s}.toggle.on{background:#216c4d}.toggle.on:after{left:23px;background:#fff}.notice{font-size:12px;color:var(--muted);line-height:1.5}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#f6f1df;color:#10231c;padding:12px 16px;border-radius:14px;font-weight:700;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:620px){.prayers{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr 1fr}.next{font-size:28px}.arabic{font-size:21px}}
 </style>
 </head>
-<body><div id="root"></div>
+<body>
+<div class="app">
+  <header class="top">
+    <div><div class="brand">🕌 Salah Recovery</div><div class="sub" id="date">Loading…</div></div>
+    <button class="icon" onclick="toggleTheme()" title="Theme">☾</button>
+  </header>
+
+  <section class="hero">
+    <div class="arabic">حَيَّ عَلَى الصَّلَاةِ</div>
+    <div class="label">NEXT SALAH</div>
+    <div class="next" id="nextName">Fajr</div>
+    <div class="count" id="countdown">--:--:--</div>
+    <div class="row" style="margin-top:14px">
+      <button class="primary" onclick="notifyNow()">🔔 Test Azan Alarm</button>
+      <button class="secondary" onclick="location.hash='alarms'">⚙ Alarm Settings</button>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="card"><div class="small">Today's Salah</div><div class="metric" id="todayMetric">0 / 5</div><div class="progress"><div class="bar" id="todayBar"></div></div></div>
+    <div class="card"><div class="small">Recovery Qaza</div><div class="metric" id="qazaMetric">0</div><div class="small">remaining prayers</div></div>
+    <div class="card"><div class="small">Salah Streak</div><div class="metric">🔥 <span id="streak">0</span></div><div class="small">consecutive days</div></div>
+    <div class="card"><div class="small">Recovery Journey</div><div class="metric" id="journey">0%</div><div class="small">of your target</div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="secondary tab" onclick="show('home')">Today</button>
+    <button class="secondary tab" onclick="show('recovery')">Recovery</button>
+    <button class="secondary tab" onclick="show('alarms')">Azan & Alarms</button>
+    <button class="secondary tab" onclick="show('extras')">Extras</button>
+  </div>
+
+  <section id="home" class="panel active">
+    <h2>Today's 5 Salah</h2><div class="prayers" id="prayers"></div>
+  </section>
+
+  <section id="recovery" class="panel">
+    <h2>My Recovery Plan</h2>
+    <div class="card">
+      <div class="small">Remaining Qaza prayers</div>
+      <div class="row" style="align-items:center;margin:8px 0">
+        <input id="qazaInput" type="number" min="0" value="0" style="width:130px;padding:11px;border-radius:12px;border:1px solid var(--line);background:#ffffff08;color:var(--cream)">
+        <button class="primary" onclick="saveQaza()">Save</button>
+      </div>
+      <div class="small">Daily recovery target</div>
+      <div class="row" style="margin-top:8px">
+        <button class="secondary" onclick="addQaza(-1)">− 1 recovered</button>
+        <button class="secondary" onclick="addQaza(1)">+ 1 to Qaza</button>
+      </div>
+      <p class="notice">No guilt, no pressure. Recovery is a journey. Keep the plan realistic and consistent.</p>
+    </div>
+  </section>
+
+  <section id="alarms" class="panel">
+    <h2>Azan & Smart Alarms</h2>
+    <div class="card">
+      <div class="setting"><div><b>Prayer notifications</b><div class="small">Browser notification permission</div></div><button class="primary" onclick="requestNotify()">Enable</button></div>
+      <div class="setting"><div><b>Pre-Salah reminder</b><div class="small">10 minutes before each prayer</div></div><button class="toggle on" id="preToggle" onclick="toggle('pre')"></button></div>
+      <div class="setting"><div><b>Azan at prayer time</b><div class="small">Plays an Azan audio file if supplied</div></div><button class="toggle on" id="azanToggle" onclick="toggle('azan')"></button></div>
+      <div class="setting"><div><b>Fajr wake-up mode</b><div class="small">Special Fajr notification</div></div><button class="toggle on" id="fajrToggle" onclick="toggle('fajr')"></button></div>
+      <p class="notice">For a reliable Android alarm while the app is fully closed, package this web app as a native/PWA app with OS-level scheduled notifications. A browser page alone cannot guarantee background alarms on every phone.</p>
+    </div>
+  </section>
+
+  <section id="extras" class="panel">
+    <h2>Unique Companion Tools</h2>
+    <div class="list">
+      <div class="card"><b>📖 Quran Goal</b><p class="small">Set a daily reading intention after Salah.</p><button class="secondary" onclick="toast('Quran goal noted for today ❤️')">Set today's goal</button></div>
+      <div class="card"><b>🧭 Qibla</b><p class="small">Open your phone's compass or a future native Qibla module.</p><button class="secondary" onclick="toast('Qibla module ready for native upgrade')">Open</button></div>
+      <div class="card"><b>🌙 Ramadan Mode</b><p class="small">A dedicated mode can combine Suhoor, Iftar, Taraweeh and Quran goals.</p><button class="secondary" onclick="toast('Ramadan mode concept activated')">Activate</button></div>
+      <div class="card"><b>🌱 Comeback Mode</b><p class="small">Missed days are treated as a fresh restart—not a failure.</p><button class="secondary" onclick="toast('Welcome back. Start with the next Salah.')">Start again</button></div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<audio id="azanAudio" preload="auto" src="azan.mp3"></audio>
+
 <script>
-const PRAYERS=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
-const ICONS={Fajr:"🌅",Dhuhr:"☀️",Asr:"🌤️",Maghrib:"🌇",Isha:"🌙"};
-
-const COUNTRIES=[
-["Afghanistan","AF","Asia/Kabul",34.5553,69.2075,"fa"],["Albania","AL","Europe/Tirane",41.3275,19.8187,"sq"],
-["Algeria","DZ","Africa/Algiers",36.7538,3.0588,"ar"],["Azerbaijan","AZ","Asia/Baku",40.4093,49.8671,"az"],
-["Bahrain","BH","Asia/Bahrain",26.2235,50.5876,"ar"],["Bangladesh","BD","Asia/Dhaka",23.8103,90.4125,"bn"],
-["Benin","BJ","Africa/Porto-Novo",6.4969,2.6289,"fr"],["Burkina Faso","BF","Africa/Ouagadougou",12.3714,-1.5197,"fr"],
-["Cameroon","CM","Africa/Douala",3.848,11.5021,"fr"],["Chad","TD","Africa/Ndjamena",12.1348,15.0557,"ar"],
-["Comoros","KM","Indian/Comoro",-11.7172,43.2473,"fr"],["Côte d’Ivoire","CI","Africa/Abidjan",5.36,-4.0083,"fr"],
-["Djibouti","DJ","Africa/Djibouti",11.5721,43.1456,"ar"],["Egypt","EG","Africa/Cairo",30.0444,31.2357,"ar"],
-["Gabon","GA","Africa/Libreville",0.4162,9.4673,"fr"],["Gambia","GM","Africa/Banjul",13.4549,-16.579,"en"],
-["Guinea","GN","Africa/Conakry",9.6412,-13.5784,"fr"],["Guinea-Bissau","GW","Africa/Bissau",11.8817,-15.617,"fr"],
-["Guyana","GY","America/Guyana",6.8013,-58.1551,"en"],["Indonesia","ID","Asia/Jakarta",-6.2088,106.8456,"id"],
-["Iran","IR","Asia/Tehran",35.6892,51.389,"fa"],["Iraq","IQ","Asia/Baghdad",33.3152,44.3661,"ar"],
-["Jordan","JO","Asia/Amman",31.9454,35.9284,"ar"],["Kazakhstan","KZ","Asia/Almaty",43.2389,76.8897,"kk"],
-["Kuwait","KW","Asia/Kuwait",29.3759,47.9774,"ar"],["Kyrgyzstan","KG","Asia/Bishkek",42.8746,74.5698,"uz"],
-["Lebanon","LB","Asia/Beirut",33.8938,35.5018,"ar"],["Libya","LY","Africa/Tripoli",32.8872,13.1913,"ar"],
-["Malaysia","MY","Asia/Kuala_Lumpur",3.139,101.6869,"ms"],["Maldives","MV","Indian/Maldives",4.1755,73.5093,"en"],
-["Mali","ML","Africa/Bamako",12.6392,-8.0029,"fr"],["Mauritania","MR","Africa/Nouakchott",18.0735,-15.9582,"ar"],
-["Morocco","MA","Africa/Casablanca",33.5731,-7.5898,"ar"],["Mozambique","MZ","Africa/Maputo",-25.9692,32.5732,"fr"],
-["Niger","NE","Africa/Niamey",13.5127,2.1128,"fr"],["Nigeria","NG","Africa/Lagos",9.0765,7.3986,"en"],
-["Oman","OM","Asia/Muscat",23.588,58.3829,"ar"],["Pakistan","PK","Asia/Karachi",24.8607,67.0011,"ur"],
-["Palestine","PS","Asia/Gaza",31.9522,35.2332,"ar"],["Qatar","QA","Asia/Qatar",25.2854,51.531,"ar"],
-["Saudi Arabia","SA","Asia/Riyadh",24.7136,46.6753,"ar"],["Senegal","SN","Africa/Dakar",14.7167,-17.4677,"fr"],
-["Sierra Leone","SL","Africa/Freetown",8.4657,-13.2317,"en"],["Somalia","SO","Africa/Mogadishu",2.0469,45.3182,"so"],
-["Sudan","SD","Africa/Khartoum",15.5007,32.5599,"ar"],["Suriname","SR","America/Paramaribo",5.852,-55.2038,"en"],
-["Syria","SY","Asia/Damascus",33.5138,36.2765,"ar"],["Tajikistan","TJ","Asia/Dushanbe",38.5598,68.787,"fa"],
-["Togo","TG","Africa/Lome",6.1256,1.2254,"fr"],["Tunisia","TN","Africa/Tunis",36.8065,10.1815,"ar"],
-["Turkey","TR","Europe/Istanbul",41.0082,28.9784,"tr"],["Turkmenistan","TM","Asia/Ashgabat",37.9601,58.3261,"uz"],
-["Uganda","UG","Africa/Kampala",0.3476,32.5825,"en"],["United Arab Emirates","AE","Asia/Dubai",25.2048,55.2708,"ar"],
-["Uzbekistan","UZ","Asia/Tashkent",41.2995,69.2401,"uz"],["Yemen","YE","Asia/Aden",12.7855,45.0187,"ar"],["Western Sahara","EH","Africa/El_Aaiun",27.1536,-13.2033,"ar"]
+const prayers=[
+ {name:"Fajr",time:"05:00"},{name:"Dhuhr",time:"12:30"},{name:"Asr",time:"16:00"},
+ {name:"Maghrib",time:"18:35"},{name:"Isha",time:"20:00"}
 ];
-
-const LANG={
-en:{name:"English",dir:"ltr",title:"Salah Recovery",recovery:"Recovery",today:"Today",patterns:"Insights",history:"History",settings:"Settings",prayerTimes:"Prayer times",next:"Next prayer",completed:"Completed",missed:"Missed",upcoming:"Upcoming",past:"Past",mark:"Mark completed",miss:"I missed this",qaza:"Qaza planner",streak:"Streak",completion:"Completion",qibla:"Qibla",tasbeeh:"Tasbeeh",duas:"Duas",fasting:"Fasting",goals:"Goals",location:"Location",language:"Language",countryDefault:"Country default",madhab:"Asr calculation",reminders:"Daily reminders",dark:"Dark mode",export:"Export backup",import:"Import backup",privacy:"Private on this device",save:"Save",close:"Close",start:"Get Started",choose:"Choose your country",reason:"What got in the way?",note:"Optional note",record:"Record missed",plan:"Plan qaza",remaining:"Remaining",done:"Done",add:"Add",reset:"Reset",monthly:"This month",last7:"Last 7 days",motivation:"Small steps, consistent salah.",recovered:"Recovered",target:"Target",count:"Count",increase:"Increase",decrease:"Decrease",auto:"Auto",method:"Prayer method",ramadan:"Ramadan mode",qiblaFrom:"Qibla from",direction:"Direction",degrees:"degrees",backup:"Backup & restore",danger:"Delete all app data",features:"Your toolkit",good:"Great work",reflect:"Reflection",selectPrayer:"Select prayer",chooseReason:"Choose a reason",qazaDesc:"Track missed salah and recover steadily.",privacyDesc:"Your records stay in this browser unless you export them.",languageDesc:"The interface follows your country by default. You can override it anytime."},
-ar:{name:"العربية",dir:"rtl",title:"متابعة الصلاة",recovery:"التعويض",today:"اليوم",patterns:"الإحصاءات",history:"السجل",settings:"الإعدادات",prayerTimes:"أوقات الصلاة",next:"الصلاة القادمة",completed:"أديت",missed:"فاتت",upcoming:"قادمة",past:"منتهية",mark:"تمت الصلاة",miss:"فاتتني الصلاة",qaza:"خطة القضاء",streak:"المواظبة",completion:"الإنجاز",qibla:"القبلة",tasbeeh:"التسبيح",duas:"الأدعية",fasting:"الصيام",goals:"الأهداف",location:"الموقع",language:"اللغة",countryDefault:"لغة البلد",madhab:"طريقة حساب العصر",reminders:"التذكيرات اليومية",dark:"الوضع الليلي",export:"تصدير نسخة",import:"استيراد نسخة",privacy:"بيانات خاصة على جهازك",save:"حفظ",close:"إغلاق",start:"ابدأ",choose:"اختر بلدك",reason:"ما الذي حدث؟",note:"ملاحظة اختيارية",record:"تسجيل الفائتة",plan:"خطة القضاء",remaining:"المتبقي",done:"تم",add:"إضافة",reset:"إعادة",monthly:"هذا الشهر",last7:"آخر 7 أيام",motivation:"خطوات صغيرة، صلاة ثابتة.",recovered:"تم التعويض",target:"الهدف",count:"العدد",increase:"زيادة",decrease:"نقصان",auto:"تلقائي",method:"طريقة الأوقات",ramadan:"وضع رمضان",qiblaFrom:"القبلة من",direction:"الاتجاه",degrees:"درجة",backup:"النسخ والاستعادة",danger:"حذف كل البيانات",features:"أدواتك",good:"عمل رائع",reflect:"للتأمل",selectPrayer:"اختر الصلاة",chooseReason:"اختر السبب",qazaDesc:"تابع الصلوات الفائتة وعوّضها تدريجيًا.",privacyDesc:"تبقى بياناتك في هذا المتصفح ما لم تصدّرها.",languageDesc:"تتبع الواجهة لغة بلدك تلقائيًا ويمكنك تغييرها."},
-ur:{name:"اردو",dir:"rtl",title:"نماز ریکوری",recovery:"قضا",today:"آج",patterns:"جائزہ",history:"تاریخ",settings:"ترتیبات",prayerTimes:"نماز کے اوقات",next:"اگلی نماز",completed:"ادا ہوگئی",missed:"رہ گئی",upcoming:"آنے والی",past:"گزر گئی",mark:"ادا کر دی",miss:"نماز رہ گئی",qaza:"قضا پلانر",streak:"مسلسل دن",completion:"تکمیل",qibla:"قبلہ",tasbeeh:"تسبیح",duas:"دعائیں",fasting:"روزہ",goals:"اہداف",location:"مقام",language:"زبان",countryDefault:"ملک کی زبان",madhab:"عصر کا حساب",reminders:"روزانہ یاددہانی",dark:"ڈارک موڈ",export:"بیک اپ ایکسپورٹ",import:"بیک اپ امپورٹ",privacy:"اس ڈیوائس پر نجی",save:"محفوظ کریں",close:"بند کریں",start:"شروع کریں",choose:"اپنا ملک منتخب کریں",reason:"کیا وجہ بنی؟",note:"اختیاری نوٹ",record:"رہ گئی نماز ریکارڈ کریں",plan:"قضا پلان بنائیں",remaining:"باقی",done:"مکمل",add:"شامل کریں",reset:"ری سیٹ",monthly:"اس ماہ",last7:"گزشتہ 7 دن",motivation:"چھوٹے قدم، مستقل نماز۔",recovered:"قضا ادا",target:"ہدف",count:"تعداد",increase:"بڑھائیں",decrease:"کم کریں",auto:"خودکار",method:"اوقات کا طریقہ",ramadan:"رمضان موڈ",qiblaFrom:"قبلہ",direction:"سمت",degrees:"ڈگری",backup:"بیک اپ اور بحالی",danger:"تمام ڈیٹا حذف کریں",features:"آپ کے ٹولز",good:"ماشاءاللہ، بہت خوب",reflect:"غور و فکر",selectPrayer:"نماز منتخب کریں",chooseReason:"وجہ منتخب کریں",qazaDesc:"رہ جانے والی نمازیں ٹریک کریں اور آہستہ آہستہ پوری کریں۔",privacyDesc:"آپ کا ڈیٹا اسی براؤزر میں رہتا ہے جب تک آپ اسے ایکسپورٹ نہ کریں۔",languageDesc:"انٹرفیس آپ کے ملک کی زبان خود منتخب کرتا ہے، آپ اسے بدل بھی سکتے ہیں۔"}
-};
-
-LANG.fr={...LANG.en,name:"Français",title:"Suivi de la prière",today:"Aujourd’hui",recovery:"Rattrapage",patterns:"Analyses",history:"Historique",settings:"Réglages",prayerTimes:"Heures de prière",next:"Prochaine prière",completed:"Accomplie",missed:"Manquée",qibla:"Qibla",tasbeeh:"Tasbih",duas:"Invocations",fasting:"Jeûne",goals:"Objectifs",location:"Lieu",language:"Langue",start:"Commencer",choose:"Choisissez votre pays",save:"Enregistrer",close:"Fermer",qaza:"Plan de rattrapage",streak:"Série",completion:"Réussite",reminders:"Rappels quotidiens",dark:"Mode sombre",export:"Exporter",import:"Importer",privacy:"Privé sur cet appareil",features:"Votre boîte à outils"};
-LANG.tr={...LANG.en,name:"Türkçe",title:"Namaz Takibi",today:"Bugün",recovery:"Kaza",patterns:"Analiz",history:"Geçmiş",settings:"Ayarlar",prayerTimes:"Namaz vakitleri",next:"Sıradaki namaz",completed:"Kılındı",missed:"Kaçırıldı",qibla:"Kıble",tasbeeh:"Tesbih",duas:"Dualar",fasting:"Oruç",goals:"Hedefler",location:"Konum",language:"Dil",start:"Başla",choose:"Ülkenizi seçin",save:"Kaydet",close:"Kapat",qaza:"Kaza planı",streak:"Seri",completion:"Tamamlanma",reminders:"Günlük hatırlatmalar",dark:"Karanlık mod",features:"Araçlar"};
-LANG.fa={...LANG.ar,name:"فارسی",title:"پیگیری نماز",today:"امروز",recovery:"قضا",patterns:"آمار",history:"تاریخچه",settings:"تنظیمات",prayerTimes:"اوقات نماز",next:"نماز بعدی",completed:"انجام شد",missed:"از دست رفت",qibla:"قبله",tasbeeh:"تسبیح",duas:"دعاها",fasting:"روزه",goals:"اهداف",location:"مکان",language:"زبان",start:"شروع",choose:"کشور خود را انتخاب کنید",save:"ذخیره",close:"بستن",qaza:"برنامه قضا",streak:"تداوم",completion:"تکمیل",features:"ابزارهای شما"};
-LANG.bn={...LANG.en,name:"বাংলা",title:"সালাহ রিকভারি",today:"আজ",recovery:"কাজা",patterns:"পরিসংখ্যান",history:"ইতিহাস",settings:"সেটিংস",prayerTimes:"নামাজের সময়",next:"পরবর্তী নামাজ",completed:"আদায় হয়েছে",missed:"ছুটেছে",qibla:"কিবলা",tasbeeh:"তাসবিহ",duas:"দোয়া",fasting:"রোজা",goals:"লক্ষ্য",location:"অবস্থান",language:"ভাষা",start:"শুরু",choose:"দেশ নির্বাচন করুন",save:"সংরক্ষণ",close:"বন্ধ",features:"টুলস"};
-LANG.id={...LANG.en,name:"Bahasa Indonesia",title:"Pemulihan Salat",today:"Hari ini",recovery:"Qadha",patterns:"Analitik",history:"Riwayat",settings:"Pengaturan",prayerTimes:"Waktu salat",next:"Salat berikutnya",completed:"Selesai",missed:"Terlewat",qibla:"Kiblat",tasbeeh:"Tasbih",duas:"Doa",fasting:"Puasa",goals:"Target",location:"Lokasi",language:"Bahasa",start:"Mulai",choose:"Pilih negara",save:"Simpan",close:"Tutup",features:"Alat Anda"};
-LANG.ms={...LANG.id,name:"Bahasa Melayu",title:"Pemulihan Solat",today:"Hari ini",recovery:"Qada",patterns:"Analitik",history:"Sejarah",settings:"Tetapan",prayerTimes:"Waktu solat",next:"Solat seterusnya",completed:"Selesai",missed:"Tertinggal",qibla:"Kiblat",tasbeeh:"Tasbih",duas:"Doa",fasting:"Puasa",goals:"Sasaran",location:"Lokasi",language:"Bahasa",start:"Mula",choose:"Pilih negara",save:"Simpan",close:"Tutup",features:"Alat anda"};
-LANG.so={...LANG.en,name:"Soomaali",title:"Soo Kabashada Salaadda",today:"Maanta",recovery:"Qada",patterns:"Falanqayn",history:"Taariikh",settings:"Dejinta",prayerTimes:"Waqtiyada salaadda",next:"Salaadda xigta",completed:"La tukaday",missed:"La seegay",qibla:"Qiblada",tasbeeh:"Tasbiix",duas:"Ducooyin",fasting:"Soon",goals:"Hadafyo",location:"Goobta",language:"Luqad",start:"Bilow",choose:"Dooro dalka",save:"Kaydi",close:"Xir",features:"Qalabkaaga"};
-LANG.az={...LANG.tr,name:"Azərbaycanca",title:"Namaz Bərpası"};
-LANG.kk={...LANG.en,name:"Қазақша",title:"Намаз бақылауы"};
-LANG.uz={...LANG.en,name:"O‘zbekcha",title:"Namoz nazorati"};
-LANG.sq={...LANG.en,name:"Shqip",title:"Ndjekja e Namazit"};
-LANG.ru={...LANG.en,name:"Русский",title:"Контроль намаза"};
-const SUPPORTED=["en","ar","ur","fr","tr","fa","bn","id","ms","so","az","kk","uz","sq","ru"];
-
-const REASONS=["Overslept","Forgot","Work / study","Travel","Family responsibilities","No suitable place","Lost track of time","Low motivation","Health / personal circumstances","Intentionally delayed","Other"];
-const METHODS=[["Auto / country default",4],["Muslim World League",3],["Umm Al-Qura, Makkah",4],["Egyptian General Authority",5],["Karachi",1],["Dubai",8],["Moonsighting Committee",15]];
-
-const FALLBACK=["5:10 AM","12:45 PM","4:10 PM","6:55 PM","8:25 PM"];
-const KEY="salah_recovery_pro_v3";
-let d=JSON.parse(localStorage.getItem(KEY)||"null")||{
- country:"Pakistan",langMode:"country",lang:"ur",madhab:"Hanafi",theme:"light",page:"today",onboard:false,records:[],qaza:{},times:{},notes:[],notifications:false,ramadan:false,fasting:{},tasbeeh:0,goals:{daily:5},firstDay:null
-};
-let modal=null,selected=null,reason="",note="",toastTimer=null;
-
-function T(k){let L=LANG[d.lang]||LANG.en;return L[k]||LANG.en[k]||k}
-function country(){return COUNTRIES.find(x=>x[0]===d.country)||COUNTRIES[0]}
-function todayKey(dt=new Date()){let y=dt.getFullYear(),m=String(dt.getMonth()+1).padStart(2,"0"),day=String(dt.getDate()).padStart(2,"0");return `${y}-${m}-${day}`}
-function parseDate(s){let [y,m,day]=s.split("-").map(Number);return new Date(y,m-1,day)}
-function fmt(s,opt={month:"short",day:"numeric",year:"numeric"}){return parseDate(s).toLocaleDateString(d.lang||undefined,opt)}
-function save(){localStorage.setItem(KEY,JSON.stringify(d))}
-function toast(msg){clearTimeout(toastTimer);let e=document.createElement("div");e.className="toast";e.textContent=msg;document.body.appendChild(e);toastTimer=setTimeout(()=>e.remove(),2400)}
-function recordsFor(day=todayKey()){return d.records.filter(r=>r.date===day)}
-function rec(day,p){return d.records.find(r=>r.date===day&&r.prayer===p)}
-function timesFor(day=todayKey()){return d.times[day]||Object.fromEntries(PRAYERS.map((p,i)=>[p,FALLBACK[i]]))}
-function toMinutes(t){let m=String(t).match(/(\d+):(\d+)\s*(AM|PM)/i);if(!m)return 0;let h=+m[1],mi=+m[2];if(m[3].toUpperCase()==="PM"&&h<12)h+=12;if(m[3].toUpperCase()==="AM"&&h===12)h=0;return h*60+mi}
-function prayerState(p,day=todayKey()){
- let r=rec(day,p);if(r?.status==="completed")return "completed";
- if(r?.status==="missed")return r.recovery==="completed"?"recovered":r.recovery==="planned"?"planned":"missed";
- if(day!==todayKey())return "untracked";
- let n=new Date(),now=n.getHours()*60+n.getMinutes(),t=toMinutes(timesFor(day)[p]);
- return t<now?"past":"upcoming";
-}
-function setRecord(day,p,status,rs="",nn=""){
- d.records=d.records.filter(x=>!(x.date===day&&x.prayer===p));
- d.records.push({date:day,prayer:p,status,recovery:"none",reason:rs,note:nn});
- save()
-}
-function completedToday(){return recordsFor().filter(r=>r.status==="completed").length}
-function missedToday(){return recordsFor().filter(r=>r.status==="missed"&&r.recovery!=="completed").length}
-function recoveredCount(){return d.records.filter(r=>r.recovery==="completed").length}
-function calcStreak(){
- let s=0,dt=new Date();
- while(true){let k=todayKey(dt),c=recordsFor(k).filter(r=>r.status==="completed").length;if(c<5)break;s++;dt.setDate(dt.getDate()-1);if(s>999)break}
- return s
-}
-function completionRate(){
- let all=d.records.filter(r=>r.status==="completed"||r.status==="missed");return all.length?Math.round(all.filter(r=>r.status==="completed").length/all.length*100):0
-}
-function nextPrayer(){
- let now=new Date(),mins=now.getHours()*60+now.getMinutes(),ts=timesFor(),idx=PRAYERS.findIndex(p=>toMinutes(ts[p])>mins);
- if(idx<0)return {p:"Fajr",time:ts.Fajr,tomorrow:true};return {p:PRAYERS[idx],time:ts[PRAYERS[idx]],tomorrow:false}
-}
-function qazaTotal(){return Object.values(d.qaza||{}).reduce((a,b)=>a+Number(b||0),0)}
-function qazaRemaining(){return Math.max(0,qazaTotal()-recoveredCount())}
-function setQaza(p,n){d.qaza[p]=Math.max(0,Number(n)||0);save()}
-function addQaza(){selected=PRAYERS[0];modal="qaza";render()}
-function calculateQibla(lat,lon){
- const kaabaLat=21.422487,kaabaLon=39.826206,rad=Math.PI/180;
- let φ1=lat*rad,φ2=kaabaLat*rad,dl=(kaabaLon-lon)*rad;
- let br=Math.atan2(Math.sin(dl),Math.cos(φ1)*Math.tan(φ2)-Math.sin(φ1)*Math.cos(dl))/rad;
- return (br+360)%360
-}
-function countryMethod(){
- let c=d.country;
- if(["Saudi Arabia","Palestine","Jordan","Qatar","Kuwait","Bahrain","Oman","United Arab Emirates"].includes(c))return 4;
- if(["Egypt","Sudan","Syria","Lebanon","Iraq","Libya","Tunisia","Algeria","Morocco"].includes(c))return 5;
- if(["Pakistan","Bangladesh","India"].includes(c))return 1;
- if(["Turkey"].includes(c))return 13;
- if(["Indonesia","Malaysia","Singapore"].includes(c))return 20;
- return 3
-}
-function countryLang(){return country()[5]||"en"}
-function countryCode(){return country()[1]}
-function applyCountry(){
- d.lang=d.langMode==="country"?countryLang():d.lang;d.times={};save();render();refreshTimes(true)
-}
-async function refreshTimes(silent=false){
- let c=country(),method=countryMethod(),school=d.madhab==="Hanafi"?1:0;
- let k=todayKey(),url=`https://api.aladhan.com/v1/timings/${k}?latitude=${c[3]}&longitude=${c[4]}&method=${method}&school=${school}`;
- try{let res=await fetch(url);let j=await res.json(),t=j?.data?.timings;if(t){d.times[k]={Fajr:t.Fajr,Dhuhr:t.Dhuhr,Asr:t.Asr,Maghrib:t.Maghrib,Isha:t.Isha};save();if(!silent){toast(T("prayerTimes")+" ✓");render()}}}
- catch(e){if(!silent){toast("Offline mode: showing safe fallback times");render()}}
-}
-function markPrayer(p){selected=p;modal="prayer";render()}
-function completePrayer(){setRecord(todayKey(),selected,"completed");modal=null;toast(selected+" ✓");render()}
-function recordMissed(){if(!reason){toast(T("chooseReason"));return}let el=document.getElementById("reasonNote");setRecord(todayKey(),selected,"missed",reason,el?el.value:"");modal=null;reason="";toast(T("missed"));render()}
-function planQaza(p){let x=rec(todayKey(),p);if(x){x.recovery="planned";save()}else{setRecord(todayKey(),p,"missed");let r=rec(todayKey(),p);r.recovery="planned";save()}toast(T("plan"));render()}
-function completeQaza(p){let r=d.records.find(x=>x.status==="missed"&&x.prayer===p&&x.recovery!=="completed");if(r){r.recovery="completed";save();toast(T("recovered"));render()}else{d.qaza[p]=Math.max(0,(d.qaza[p]||0)-1);save();toast(T("recovered"));render()}}
-function toggleFast(){
- let k=todayKey();d.fasting[k]=!d.fasting[k];save();render()
-}
-function tasbeeh(delta){d.tasbeeh=Math.max(0,d.tasbeeh+delta);save();render()}
-function exportData(){let b=new Blob([JSON.stringify(d,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="salah-recovery-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast(T("export"))}
-function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.records||!x.qaza)throw 0;d=x;save();toast(T("import"));render()}catch{toast("Invalid backup file")}};r.readAsText(f)}
-function toggleNotifications(on){
- d.notifications=on;save();
- if(on&&"Notification"in window)Notification.requestPermission().then(p=>{if(p!=="granted"){d.notifications=false;save();toast("Permission not granted")}else toast(T("reminders"))});
- else if(on&&!window.Notification){d.notifications=false;save();toast("Notifications unavailable")}
- else toast(T("reminders"));
- render()
-}
-function reminderCheck(){
- if(!d.notifications||!("Notification"in window)||Notification.permission!=="granted")return;
- let now=new Date(),mins=now.getHours()*60+now.getMinutes(),ts=timesFor();
- let p=PRAYERS.find(x=>Math.abs(toMinutes(ts[x])-mins)<1);
- if(p){let key="sr_"+todayKey()+"_"+p;if(!sessionStorage.getItem(key)){new Notification("Salah Recovery",{body:p+" — "+T("next")});sessionStorage.setItem(key,"1")}}
-}
-function resetData(){if(confirm(T("danger")+"?")){localStorage.removeItem(KEY);location.reload()}}
-function nav(page){d.page=page;save();render()}
-function setLangChoice(v){
- if(v==="country"){d.langMode="country";d.lang=countryLang()}
- else {d.langMode="manual";d.lang=v}
- save();render()
-}
-function setLanguage(v){d.lang=v;d.langMode="manual";save();render()}
-function useGeo(){
- if(!navigator.geolocation){toast("Location unavailable");return}
- navigator.geolocation.getCurrentPosition(pos=>{
-   let best=COUNTRIES[0],dist=1e9;
-   COUNTRIES.forEach(c=>{let x=(c[3]-pos.coords.latitude)**2+(c[4]-pos.coords.longitude)**2;if(x<dist){dist=x;best=c}});
-   d.country=best[0];d.langMode="country";d.lang=countryLang();d.times={};save();toast(T("location")+" ✓");render();refreshTimes(true)
- },()=>toast("Location permission was not granted"))
-}
-
-function shell(content){
- document.body.className=d.theme==="dark"?"dark":"";
- document.documentElement.lang=d.lang||"en";document.documentElement.dir=(LANG[d.lang]?.dir||"ltr");
- return `<div class="app">
- <header class="top"><div><div class="brand">☾ ${T("title")}</div><div class="date">${new Date().toLocaleDateString(d.lang,{weekday:"long",month:"long",day:"numeric"})} · ${country()[0]}</div></div><button class="iconbtn" onclick="d.theme=d.theme==='dark'?'light':'dark';save();render()" aria-label="theme">${d.theme==="dark"?"☀️":"🌙"}</button></header>
- ${content}
- <nav class="nav">${[
- ["today","🏠",T("today")],["recovery","🤲",T("recovery")],["patterns","📊",T("patterns")],["history","🕘",T("history")],["settings","⚙️",T("settings")]
- ].map(x=>`<button class="${d.page===x[0]?"active":""}" onclick="nav('${x[0]}')"><span>${x[1]}</span>${x[2]}</button>`).join("")}</nav>${modalHTML()}</div>`
-}
-
-function todayPage(){
- let n=nextPrayer(),c=completedToday(),pct=Math.round(c/5*100),q=qazaRemaining(),fast=d.fasting[todayKey()];
- return `<h1 class="page-title">${T("today")}</h1><p class="sub">${T("motivation")}</p>
- <section class="card hero"><div class="eyebrow">${T("next")}</div><div class="next"><div><h2>${n.p}</h2><div class="muted">${n.tomorrow?"Tomorrow":"Today"} · ${n.time}</div></div><span class="badge">${c}/5</span></div><div class="progress"><i style="width:${pct}%"></i></div><div class="row"><span class="muted">${pct}% ${T("completion")}</span><span class="muted">🔥 ${calcStreak()} ${T("streak")}</span></div><div class="heroBtns"><button class="btn" style="background:#fff;color:#075a4a" onclick="markPrayer('${n.p}')">${T("mark")}</button><button class="btn" style="background:rgba(255,255,255,.15);color:#fff" onclick="nav('recovery')">${T("qaza")}</button></div></section>
- <section class="card"><div class="row"><h3>${T("prayerTimes")}</h3><button class="btn soft tiny" onclick="refreshTimes()">↻</button></div>
- ${PRAYERS.map(p=>{let s=prayerState(p),r=rec(todayKey(),p),label=s==="completed"?T("completed"):s==="missed"?T("missed"):s==="recovered"?T("recovered"):s==="planned"?T("planned"):s==="past"?T("past"):T("upcoming");return `<div class="prayer"><div class="pname"><div class="picon">${ICONS[p]}</div><div><b>${p}</b><div class="ptime">${timesFor()[p]}</div></div></div><div><div class="status ${s==='completed'||s==='recovered'?'done':s==='missed'?'missed':s==='planned'?'planned':'upcoming'}">${label}</div>${s!=="completed"&&s!=="recovered"&&s!=="upcoming"?`<button class="btn soft tiny" style="margin-top:4px" onclick="markPrayer('${p}')">${T("mark")}</button>`:""}</div></div>`}).join("")}</section>
- <section class="card"><div class="grid2"><div class="mini"><span class="muted">🤲 ${T("qaza")}</span><b>${q}</b><span class="muted">${T("remaining")}</span></div><div class="mini"><span class="muted">🌙 ${T("fasting")}</span><b>${fast?"✓":"—"}</b><button class="btn soft tiny" onclick="toggleFast()">${fast?T("done"):T("add")}</button></div></div></section>
- <section class="section-head"><h3>${T("features")}</h3></section><section class="card featuregrid">
- <div class="feature" onclick="nav('recovery')">🤲<b>${T("qaza")}</b><span>${T("qazaDesc")}</span></div>
- <div class="feature" onclick="nav('patterns')">📊<b>${T("patterns")}</b><span>${T("last7")} & prayer consistency</span></div>
- <div class="feature" onclick="nav('history')">🧭<b>${T("qibla")}</b><span>Find the Qibla direction from your location.</span></div>
- <div class="feature" onclick="nav('settings')">🔒<b>${T("privacy")}</b><span>${T("privacyDesc")}</span></div></section>`
-}
-
-function recoveryPage(){
- let q=qazaTotal(),rem=qazaRemaining(),miss=d.records.filter(r=>r.status==="missed"&&r.recovery!=="completed");
- return `<h1 class="page-title">${T("recovery")}</h1><p class="sub">${T("qazaDesc")}</p>
- <section class="card hero"><div class="eyebrow">${T("qaza")}</div><h2>${rem}</h2><div class="muted">${T("remaining")} · ${q} ${T("count")}</div><div class="progress"><i style="width:${q?Math.min(100,Math.round((q-rem)/q*100)):0}%"></i></div><div class="row"><span class="muted">${recoveredCount()} ${T("recovered")}</span><button class="btn" style="background:#fff;color:#075a4a" onclick="addQaza()">+ ${T("add")}</button></div></section>
- <section class="card"><h3>${T("qaza")}</h3>${PRAYERS.map(p=>`<div class="listitem"><div class="row"><div><b>${ICONS[p]} ${p}</b><div class="muted">${T("target")}: ${d.qaza[p]||0}</div></div><div style="display:flex;gap:5px"><button class="btn soft tiny" onclick="setQaza('${p}',Math.max(0,(d.qaza['${p}']||0)-1));render()">−</button><button class="btn soft tiny" onclick="setQaza('${p}',(d.qaza['${p}']||0)+1);render()">+</button></div></div></div>`).join("")}</section>
- <section class="card"><div class="row"><h3>${T("missed")}</h3><span class="pill">${miss.length}</span></div>${miss.length?miss.slice().reverse().slice(0,12).map(r=>`<div class="listitem"><div class="row"><div><b>${r.prayer}</b><div class="muted">${fmt(r.date)} · ${r.reason||"—"}</div></div><button class="btn primary tiny" onclick="completeQaza('${r.prayer}')">${T("recovered")}</button></div></div>`).join(""):`<div class="empty"><div class="big">✨</div><b>${T("good")}</b><div class="muted">${T("motivation")}</div></div>`}</section>`
-}
-
-function last7(){
- let out=[],dt=new Date();for(let i=6;i>=0;i--){let x=new Date(dt);x.setDate(dt.getDate()-i);let k=todayKey(x),c=recordsFor(k).filter(r=>r.status==="completed").length;out.push({label:x.toLocaleDateString(d.lang,{weekday:"short"}),c})}return out
-}
-function insightsPage(){
- let top=null,counts={};d.records.forEach(r=>{if(r.reason)counts[r.reason]=(counts[r.reason]||0)+1});Object.entries(counts).forEach(x=>{if(!top||x[1]>top[1])top=x});
- let rate=completionRate();
- return `<h1 class="page-title">${T("patterns")}</h1><p class="sub">See your trends without turning worship into pressure.</p>
- <section class="card"><div class="grid3"><div class="stat"><b>${rate}%</b><span>${T("completion")}</span></div><div class="stat"><b>🔥 ${calcStreak()}</b><span>${T("streak")}</span></div><div class="stat"><b>${recoveredCount()}</b><span>${T("recovered")}</span></div></div></section>
- <section class="card"><h3>Prayer consistency</h3>${PRAYERS.map(p=>{let rs=d.records.filter(r=>r.prayer===p),cc=rs.filter(r=>r.status==="completed").length,rr=rs.length?Math.round(cc/rs.length*100):0;return `<div class="metric"><div class="row"><span>${ICONS[p]} ${p}</span><b>${rr}%</b></div><div class="bar" style="margin-top:7px"><i style="width:${rr}%"></i></div></div>`}).join("")}</section>
- <section class="card"><h3>${T("last7")}</h3>${last7().map(x=>`<div style="margin:10px 0"><div class="row"><span class="muted">${x.label}</span><span>${x.c}/5</span></div><div class="bar" style="margin-top:5px"><i style="width:${x.c*20}%"></i></div></div>`).join("")}</section>
- ${top?`<section class="card"><div class="row"><div><h3>${T("reflect")}</h3><b style="display:block;margin-top:6px">${top[0]}</b><span class="muted">${top[1]} times recorded</span></div><span style="font-size:30px">💡</span></div></section>`:""}
- <section class="card"><h3>🧭 ${T("qibla")}</h3><div class="qibla"><div class="muted">${T("qiblaFrom")} ${country()[0]}</div><div class="compass"><div class="needle" id="needle">➤</div></div><div class="degree" id="qdeg">—°</div><div class="muted">${T("direction")} ${T("degrees")}</div><button class="btn soft" style="margin-top:10px" onclick="useQibla()">${T("qibla")}</button></div></section>
- <section class="card"><div class="row"><div><h3>📿 ${T("tasbeeh")}</h3><div class="muted">${T("count")}: ${d.tasbeeh}</div></div><button class="btn primary" onclick="tasbeeh(33)">+33</button></div><div class="actions"><button class="btn soft" onclick="tasbeeh(1)">+1</button><button class="btn soft" onclick="tasbeeh(100)">+100</button><button class="btn danger" onclick="d.tasbeeh=0;save();render()">↺</button></div></section>`
-}
-function useQibla(){
- let done=(lat,lon)=>{let deg=Math.round(calculateQibla(lat,lon));document.getElementById("qdeg").textContent=deg+"°";document.getElementById("needle").style.setProperty("--angle",deg+"deg")};
- if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>done(p.coords.latitude,p.coords.longitude),()=>{done(country()[3],country()[4]);toast("Using country center")});else done(country()[3],country()[4])
-}
-function historyPage(){
- let now=new Date(),y=now.getFullYear(),m=now.getMonth(),first=new Date(y,m,1),start=(first.getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),cells=[];
- for(let i=0;i<start;i++)cells.push("<div></div>");
- for(let n=1;n<=dim;n++){let k=todayKey(new Date(y,m,n)),rs=recordsFor(k),c=rs.filter(r=>r.status==="completed").length,cl=c===5?"good":rs.some(r=>r.status==="missed")?"bad":c?"partial":"";cells.push(`<div class="day ${cl} ${k===todayKey()?"today":""}">${n}</div>`)}
- let days=[...new Set(d.records.map(r=>r.date))].sort().reverse();
- return `<h1 class="page-title">${T("history")}</h1><p class="sub">${T("privacyDesc")}</p>
- <section class="card"><div class="row" style="margin-bottom:10px"><b>${now.toLocaleDateString(d.lang,{month:"long",year:"numeric"})}</b><span class="muted">● ${T("completed")} · ● ${T("missed")}</span></div><div class="calendar">${["M","T","W","T","F","S","S"].map(x=>`<div class="calhead">${x}</div>`).join("")}${cells.join("")}</div></section>
- ${days.length?`<div class="section-head"><h3>Recent activity</h3></div>${days.slice(0,20).map(k=>{let rs=recordsFor(k),c=rs.filter(r=>r.status==="completed").length,mm=rs.filter(r=>r.status==="missed").length;return `<section class="card"><div class="row"><b>${fmt(k)}</b><span class="muted">${c} ✓ · ${mm} ×</span></div><div class="muted" style="margin-top:8px">${rs.map(r=>`${r.prayer} ${r.status==="completed"?"✓":"×"}`).join(" · ")}</div></section>`}).join("")}`:`<section class="card empty"><div class="big">🕘</div><b>No history yet</b><div class="muted">${T("motivation")}</div></section>`}`
-}
-function settingsPage(){
- return `<h1 class="page-title">${T("settings")}</h1><p class="sub">${T("languageDesc")}</p>
- <section class="card"><label>${T("location")} <select onchange="d.country=this.value;applyCountry()">${COUNTRIES.map(x=>`<option ${x[0]===d.country?"selected":""} value="${x[0]}">${x[0]} · ${x[1]}</option>`).join("")}</select></label><button class="btn soft full" onclick="useGeo()">📍 Use my approximate location</button></section>
- <section class="card"><label>${T("language")} <select onchange="setLangChoice(this.value)"><option value="country" ${d.langMode==="country"?"selected":""}>${T("countryDefault")}: ${LANG[countryLang()]?.name||countryLang()}</option>${SUPPORTED.map(x=>`<option value="${x}" ${d.langMode==="manual"&&d.lang===x?"selected":""}>${LANG[x].name}</option>`).join("")}</select></label></section>
- <section class="card"><label>${T("madhab")} <select onchange="d.madhab=this.value;d.times={};save();refreshTimes(true)"><option ${d.madhab==="Hanafi"?"selected":""}>Hanafi</option><option ${d.madhab==="Shafi"?"selected":""}>Shafi</option></select></label><label>${T("method")} <select onchange="d.manualMethod=this.value;d.times={};save();refreshTimes(true)">${METHODS.map(x=>`<option value="${x[1]}" ${String(d.manualMethod||"")===String(x[1])?"selected":""}>${x[0]}</option>`).join("")}</select></label></section>
- <section class="card"><div class="switch"><div><b>🔔 ${T("reminders")}</b><div class="muted">Browser reminders while this app is open.</div></div><input type="checkbox" ${d.notifications?"checked":""} onchange="toggleNotifications(this.checked)"></div><div class="switch" style="margin-top:16px"><div><b>🌙 ${T("ramadan")}</b><div class="muted">Adds fasting tracking to your daily dashboard.</div></div><input type="checkbox" ${d.ramadan?"checked":""} onchange="d.ramadan=this.checked;save();render()"></div></section>
- <section class="card"><h3>💾 ${T("backup")}</h3><p class="muted" style="margin:5px 0 12px">${T("privacyDesc")}</p><div class="actions"><button class="btn soft" onclick="exportData()">↥ ${T("export")}</button><button class="btn soft" onclick="document.getElementById('importFile').click()">↧ ${T("import")}</button></div><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"></section>
- <section class="card"><div class="row"><div><b>🔒 ${T("privacy")}</b><div class="muted">${T("privacyDesc")}</div></div><span class="pill">${countryCode()}</span></div></section>
- <section class="card"><button class="btn danger full" onclick="resetData()">⚠ ${T("danger")}</button></section>`
-}
-function onboarding(){
- return `<div style="min-height:100vh;display:grid;place-items:center;padding:20px"><section class="card" style="margin:0;width:100%;max-width:540px;text-align:center;padding:30px 22px"><div style="font-size:55px">🕌</div><h1 style="font-size:31px;margin:9px 0">${T("title")}</h1><p class="muted" style="line-height:1.55">${T("qazaDesc")}<br>57 OIC member countries • smart language defaults • private data.</p><label style="text-align:start;margin-top:22px">${T("choose")}<select id="ocountry">${COUNTRIES.map(x=>`<option ${x[0]===d.country?"selected":""}>${x[0]} · ${x[1]}</option>`).join("")}</select></label><label style="text-align:start">${T("madhab")}<select id="omadhab"><option>Hanafi</option><option>Shafi</option></select></label><button class="btn primary full" onclick="startApp()">${T("start")} →</button><div class="muted" style="margin-top:11px">No account required • Local-first • Export anytime</div></section></div>`
-}
-function startApp(){d.country=document.getElementById("ocountry").value;d.madhab=document.getElementById("omadhab").value;d.langMode="country";d.lang=countryLang();d.onboard=true;d.firstDay=todayKey();save();refreshTimes(true);render()}
-function modalHTML(){
- if(!modal)return "";
- if(modal==="prayer")return `<div class="modal" onclick="if(event.target===this){modal=null;render()}"><div class="sheet"><h2>${ICONS[selected]} ${selected}</h2><div class="muted" style="margin-top:5px">${timesFor()[selected]} · ${fmt(todayKey())}</div><div class="actions"><button class="btn soft" onclick="modal=null;render()">${T("close")}</button><button class="btn primary" onclick="completePrayer()">${T("mark")} ✓</button></div><button class="btn danger full" style="margin-top:8px" onclick="modal='reason';render()">${T("miss")}</button></div></div>`;
- if(modal==="reason")return `<div class="modal"><div class="sheet"><h2>${T("reason")}</h2><div class="muted" style="margin-top:5px">${T("reflect")}</div><div class="options">${REASONS.map(x=>`<div class="option ${reason===x?"sel":""}" onclick="reason=${JSON.stringify(x)};render()">${x}${reason===x?" ✓":""}</div>`).join("")}</div><textarea id="reasonNote" placeholder="${T("note")}">${note}</textarea><div class="actions"><button class="btn soft" onclick="modal=null;reason='';render()">${T("close")}</button><button class="btn danger" onclick="recordMissed()">${T("record")}</button></div></div></div>`;
- if(modal==="qaza")return `<div class="modal"><div class="sheet"><h2>🤲 ${T("plan")}</h2><div class="muted">${T("target")}</div><div class="options">${PRAYERS.map(p=>`<div class="option ${selected===p?"sel":""}" onclick="selected='${p}';render()">${ICONS[p]} ${p} · ${d.qaza[p]||0}</div>`).join("")}</div><label style="margin-top:13px">${T("count")}<input id="qnum" type="number" min="1" value="1"></label><div class="actions"><button class="btn soft" onclick="modal=null;render()">${T("close")}</button><button class="btn primary" onclick="let n=Number(document.getElementById('qnum').value)||1;d.qaza[selected]=(d.qaza[selected]||0)+n;save();modal=null;toast(T('add'));render()">${T("save")}</button></div></div></div>`;
- return ""
-}
+const KEY="salahRecoveryUltimate";
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{done:{},qaza:0,streak:0,pre:true,azan:true,fajr:true,lastDate:""};
+function persist(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function dayKey(){return new Date().toISOString().slice(0,10)}
 function render(){
- document.body.className=d.theme==="dark"?"dark":"";
- let content=d.page==="today"?todayPage():d.page==="recovery"?recoveryPage():d.page==="patterns"?insightsPage():d.page==="history"?historyPage():settingsPage();
- document.getElementById("root").innerHTML=d.onboard?shell(content):onboarding()
+ const d=dayKey(); document.getElementById("date").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+ let done=0; prayers.forEach((p,i)=>{if(state.done[d+"-"+i])done++});
+ document.getElementById("todayMetric").textContent=done+" / 5"; document.getElementById("todayBar").style.width=(done/5*100)+"%";
+ document.getElementById("qazaMetric").textContent=state.qaza; document.getElementById("qazaInput").value=state.qaza;
+ document.getElementById("streak").textContent=state.streak; document.getElementById("journey").textContent=Math.min(100,Math.round(done/5*100))+"%";
+ document.getElementById("prayers").innerHTML=prayers.map((p,i)=>{let k=d+"-"+i,on=!!state.done[k];return `<div class="prayer ${on?'done':''}"><div class="pname">${p.name}</div><div class="ptime">${p.time}</div><button class="check" onclick="mark(${i})">${on?'✓ Prayed':'Mark prayed'}</button></div>`}).join("");
+ ["pre","azan","fajr"].forEach(x=>document.getElementById(x+"Toggle").classList.toggle("on",!!state[x]));
 }
-render();setInterval(reminderCheck,30000);setTimeout(()=>{if(d.onboard&&!d.times[todayKey()])refreshTimes(true)},600);
+function mark(i){let k=dayKey()+"-"+i;state.done[k]=!state.done[k];persist();toast(state.done[k]?"Salah marked complete ✓":"Marked incomplete")}
+function saveQaza(){state.qaza=Math.max(0,Number(document.getElementById("qazaInput").value)||0);persist();toast("Recovery plan saved")}
+function addQaza(n){state.qaza=Math.max(0,state.qaza+n);persist();toast(n<0?"One Qaza recovered 🤍":"Qaza count updated")}
+function toggle(x){state[x]=!state[x];persist()}
+function show(id){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");location.hash=id}
+function toast(s){let t=document.getElementById("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+async function requestNotify(){if(!("Notification"in window)){toast("Notifications are not supported here");return}let p=await Notification.requestPermission();toast(p==="granted"?"Notifications enabled ✓":"Permission not granted")}
+function notifyNow(){requestNotify().then(()=>{try{document.getElementById("azanAudio").play()}catch(e){}; if("Notification"in window&&Notification.permission==="granted")new Notification("🕌 Salah Recovery",{body:"حَيَّ عَلَى الصَّلَاةِ — Time to pray.",silent:false});})}
+function toggleTheme(){document.body.style.filter=document.body.style.filter?"":"brightness(1.12)";toast("Display adjusted")}
+function nextPrayer(){
+ let now=new Date(), best=null;
+ prayers.forEach(p=>{let [h,m]=p.time.split(":").map(Number),x=new Date(now);x.setHours(h,m,0,0);if(x<=now)x.setDate(x.getDate()+1);if(!best||x<best.x)best={p,x}});
+ let ms=best.x-now;let h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1000);
+ document.getElementById("nextName").textContent=best.p.name;document.getElementById("countdown").textContent=[h,m,s].map((v,i)=>String(v).padStart(2,"0")).join(":");
+}
+setInterval(nextPrayer,1000);nextPrayer();render();
+if(location.hash)show(location.hash.slice(1));
 </script>
 </body>
 </html>
