@@ -208,6 +208,28 @@ function fmt(x){return new Date(x+"T00:00:00").toLocaleDateString(undefined,{wee
 function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function toast(x){clearTimeout(toastTimer);let e=document.createElement("div");e.className="toast";e.textContent=x;document.body.appendChild(e);toastTimer=setTimeout(()=>e.remove(),2600)}
 function notify(t,b){if("Notification"in window&&Notification.permission==="granted")try{new Notification(t,{body:b,tag:t})}catch(e){}}
+async function enableRequiredAccess(){
+  prime();
+  let nOK=false,lOK=false;
+  if("Notification"in window){
+    try{
+      if(Notification.permission==="default") await Notification.requestPermission();
+      nOK=Notification.permission==="granted";
+    }catch(e){}
+  }
+  if(navigator.geolocation){
+    await new Promise(resolve=>navigator.geolocation.getCurrentPosition(async pos=>{
+      d.lat=pos.coords.latitude; d.lon=pos.coords.longitude; d.city="My location"; d.locationSource="gps"; d.qibla=qiblaBearing(d.lat,d.lon); lOK=true;
+      try{await fetchTimes(true)}catch(e){} save(); resolve();
+    },()=>resolve(),{enableHighAccuracy:true,timeout:15000,maximumAge:0}));
+  }
+  d.alarms=true; d.adhan=true; save(); scheduleNextAlarms?.();
+  if(nOK&&lOK) toast("✅ Location + notifications enabled");
+  else if(!nOK&&lOK) toast("📍 Location enabled. Notification access is blocked — allow it in browser settings.");
+  else if(nOK&&!lOK) toast("🔔 Notifications enabled. Location access was not allowed.");
+  else toast("⚠️ Allow Location and Notifications in your browser settings.");
+  render();
+}
 function prime(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume()}catch(e){}}
 function beep(freq=880,dur=.8){prime();if(!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.connect(g);g.connect(audioCtx.destination);let t=audioCtx.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.02)}
 const ADHAN="https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg";
@@ -323,7 +345,7 @@ function history(){
 function countriesLocationSelect(locCities){return `<optgroup label="🌍 All countries / capitals">${countryLocationOptions()}</optgroup><optgroup label="🏙️ Saved city locations">${locCities}</optgroup>`}
 function settings(){
  let locCities=Object.keys(CITY).map(x=>`<option value="city:${esc(x)}" ${x===d.city?"selected":""}>${esc(x)}${CITY[x][2]?` — ${esc(CITY[x][2])}`:""}</option>`).join("");let loc=countriesLocationSelect(locCities);let countries=COUNTRIES.map(c=>`<option ${c[0]===d.country?"selected":""}>${esc(c[0])}</option>`).join("");let currentCountry=countryInfo();let allowedLangs=countryLangs(currentCountry);let langs=allowedLangs.map(k=>`<option value="${k}" ${d.lang===k?"selected":""}>${esc(LANG_NAMES[k]||k)}</option>`).join("");
- return`<h2 style="padding:10px 14px">Settings</h2><section class="card"><label>Country / Islamic region<select onchange="applyCountry(this.value)">${countries}</select></label><label>Language<select onchange="d.lang=this.value;d.langMode='manual';save();render()">${langs}</select></label><label>Location<select onchange="applyLocation(this.value)">${loc}</select><span class="muted">All countries are available above; selecting a country uses its capital as the prayer-time location.</span></label><div class="actions"><button class="btn primary" onclick="getGPS()">📍 Detect GPS</button><button class="btn soft" onclick="fetchTimes()">↻ Update times</button></div><label style="display:block;margin-top:13px">Calculation method<select onchange="d.method=+this.value;save();fetchTimes(true)"><option value="1" ${d.method==1?"selected":""}>University of Islamic Sciences, Karachi</option><option value="3" ${d.method==3?"selected":""}>Muslim World League</option><option value="4" ${d.method==4?"selected":""}>Umm Al-Qura, Makkah</option><option value="5" ${d.method==5?"selected":""}>Egyptian General Authority</option><option value="7" ${d.method==7?"selected":""}>Tehran</option><option value="13" ${d.method==13?"selected":""}>Turkey</option><option value="16" ${d.method==16?"selected":""}>Dubai</option></select></label><label style="display:block;margin-top:13px">Asr juristic school<select onchange="d.madhab=this.value;save();fetchTimes(true)"><option ${d.madhab==="Hanafi"?"selected":""}>Hanafi</option><option ${d.madhab==="Shafi"?"selected":""}>Shafi</option></select></label></section>
+ return`<h2 style="padding:10px 14px">Settings</h2><section class="card"><label>Country / Islamic region<select onchange="applyCountry(this.value)">${countries}</select></label><label>Language<select onchange="d.lang=this.value;d.langMode='manual';save();render()">${langs}</select></label><label>Location<select onchange="applyLocation(this.value)">${loc}</select><span class="muted">All countries are available above; selecting a country uses its capital as the prayer-time location.</span></label><div class="actions"><button class="btn primary" onclick="getGPS()">📍 Detect GPS</button><button class="btn soft" onclick="fetchTimes()">↻ Update times</button></div><div class="actions"><button class="btn primary" onclick="enableRequiredAccess()">🔐 Enable Location + Notifications</button></div><p class="muted" style="margin-top:8px">Allow both browser permissions when asked. If a permission was previously blocked, Android/browser settings may need to be opened manually.</p><label style="display:block;margin-top:13px">Calculation method<select onchange="d.method=+this.value;save();fetchTimes(true)"><option value="1" ${d.method==1?"selected":""}>University of Islamic Sciences, Karachi</option><option value="3" ${d.method==3?"selected":""}>Muslim World League</option><option value="4" ${d.method==4?"selected":""}>Umm Al-Qura, Makkah</option><option value="5" ${d.method==5?"selected":""}>Egyptian General Authority</option><option value="7" ${d.method==7?"selected":""}>Tehran</option><option value="13" ${d.method==13?"selected":""}>Turkey</option><option value="16" ${d.method==16?"selected":""}>Dubai</option></select></label><label style="display:block;margin-top:13px">Asr juristic school<select onchange="d.madhab=this.value;save();fetchTimes(true)"><option ${d.madhab==="Hanafi"?"selected":""}>Hanafi</option><option ${d.madhab==="Shafi"?"selected":""}>Shafi</option></select></label></section>
  <section class="card"><h3>🔔 Alarm & Adhan</h3><div class="toggle"><div><b>Pre-prayer reminder</b><div class="muted">Alarm + notification before each prayer.</div></div><button class="switch ${d.alarms?"on":""}" onclick="d.alarms=!d.alarms;save();render();if(d.alarms)enableAlarms()"><i></i></button></div><div class="toggle"><div><b>Adhan at prayer time</b><div class="muted">Uses a separate audio track.</div></div><button class="switch ${d.adhan?"on":""}" onclick="d.adhan=!d.adhan;save();render()"><i></i></button></div><div class="toggle"><div><b>Different Fajr Adhan</b><div class="muted">Use Fajr-specific audio when available.</div></div><button class="switch ${d.fajrAdhan?"on":""}" onclick="d.fajrAdhan=!d.fajrAdhan;save();render()"><i></i></button></div><label style="display:block;padding-top:12px">Reminder lead time<select onchange="d.lead=+this.value;save();render()">${[5,10,15,20,30].map(n=>`<option ${d.lead===n?"selected":""}>${n}</option>`).map((x,i)=>x.replace(">",">")).join("")}</select><span class="muted">minutes before prayer</span></label><div class="actions"><button class="btn soft" onclick="testAlarm()">🔔 Test alarm</button><button class="btn primary" onclick="testAdhan()">🕌 Test Adhan</button></div><p class="muted" style="margin-top:9px">Important: browser alarms are most reliable while the page is open. Android/iOS can suspend background web pages; a native app is needed for guaranteed locked-screen alarms.</p></section>
  <section class="card"><h3>✨ Focus mode</h3><div class="toggle"><div><b>Prayer focus</b><div class="muted">Keeps screen awake while you prepare and pray.</div></div><button class="switch ${d.focus?"on":""}" onclick="toggleFocus()"><i></i></button></div></section>
  <section class="card"><h3>💾 Your data</h3><p class="muted" style="margin:7px 0 12px">Your records stay in this browser. Export a backup before changing phones.</p><div class="grid2"><button class="btn soft" onclick="exportData()">Export</button><button class="btn soft" onclick="document.getElementById('importFile').click()">Import</button></div><input id="importFile" class="hide" type="file" accept=".json" onchange="importData(this)"></section>
@@ -354,7 +376,7 @@ function checkAlarms(){
  if(!d.alarms)return;let now=new Date(),day=todayKey();
  PR.forEach(p=>{let x=timeObj(t(p));if(!x)return;let diff=x-now,pre=day+"-pre-"+p,ad=day+"-ad-"+p;
  if(diff>0&&diff<=d.lead*60000&&lastAlarmKey!==pre){lastAlarmKey=pre;beep(880,.9);notify("🔔 "+p+" soon",`${p} is in about ${Math.max(1,Math.ceil(diff/60000))} minutes.`)}
- if(Math.abs(diff)<=30000&&lastAdhanKey!==ad){lastAdhanKey=ad;notify("🕌 "+p,`It is time for ${p}.`);if(d.adhan)playAdhan(p==="Fajr"&&d.fajrAdhan)}})
+ if(Math.abs(diff)<=30000&&lastAdhanKey!==ad){lastAdhanKey=ad;notify("🕌 "+p,`It is time for ${p}.`);beep(1040,1.2);if(d.adhan)playAdhan(p==="Fajr"&&d.fajrAdhan)}})
 }
 function onboarding(){return`<div style="min-height:100vh;display:grid;place-items:center;padding:22px"><section class="card" style="margin:0;width:100%;padding:28px;text-align:center"><div style="font-size:58px">🤲</div><h1 style="margin:10px 0 7px">Salah Recovery <span class="badge">PRO</span></h1><p class="muted">A private companion for prayer consistency, missed-salah recovery, Qibla, reminders and reflection.</p><label style="display:block;text-align:left;margin-top:22px">Choose your country<select id="ocountry">${COUNTRIES.map(c=>`<option>${esc(c[0])}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Choose your city<select id="ocity">${Object.keys(CITY).filter(x=>x!=="New York").map(x=>`<option>${x}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Asr school<select id="omadhab"><option>Hanafi</option><option>Shafi</option></select></label><button class="btn primary" style="width:100%;margin-top:16px" onclick="applyCountry(ocountry.value);d.city=ocity.value;d.lat=null;d.lon=null;d.locationSource='saved';d.madhab=omadhab.value;d.onboard=true;save();fetchTimes(true);render()">Begin my journey →</button><p class="small muted" style="margin-top:13px">You can change location, calculation method and alarm settings later.</p></section></div>`}
 function render(){document.body.className=d.theme==="dark"?"dark":"";document.getElementById("root").innerHTML=d.onboard?shell(page==="today"?today():page==="recovery"?recovery():page==="tools"?tools():page==="insights"?insights():page==="history"?history():settings()):onboarding()}
@@ -376,23 +398,48 @@ render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date
   function vib(p=[90,50,90]){if(d.adv.vibrate&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}}
   async function askNotify(){if(!('Notification'in window)){toast('Notifications are not supported in this browser.');return}try{let r=await Notification.requestPermission();d.adv.notify=r==='granted';advSave();toast(r==='granted'?'Notifications enabled':'Notification permission not granted');render()}catch(e){toast('Notification permission could not be requested.')}}
   function notify2(title,body){if(d.adv.notify&&'Notification'in window&&Notification.permission==='granted'){try{new Notification(title,{body,tag:'salah-'+todayKey()})}catch(e){}}}
-  let currentAudio=null;
-  function playAdhan(){
+  let currentAudio=null, alarmTimers=[];
+  function primeAdhanAudio(){
     try{
-      if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
-      currentAudio=new Audio(ADHAN_URL);currentAudio.preload='auto';currentAudio.volume=Math.max(0,Math.min(1,+d.adv.soundLevel||.95));
-      const q=currentAudio.play(); if(q&&q.catch)q.catch(()=>toast('Browser ne background audio block ki. Test Adhan button ko ek dafa tap karein.'));
-      vib([120,70,120,70,220]); return currentAudio;
-    }catch(e){toast('Adhan audio unavailable.')} 
+      if(currentAudio) return currentAudio;
+      currentAudio=new Audio(ADHAN_URL);
+      currentAudio.preload='auto';
+      currentAudio.volume=Math.max(0,Math.min(1,+d.adv.soundLevel||.95));
+      currentAudio.setAttribute('playsinline','');
+      currentAudio.addEventListener('error',()=>toast('Adhan audio could not be loaded. Check internet and tap Test Adhan again.'),{once:true});
+      return currentAudio;
+    }catch(e){return null}
+  }
+  function playAdhan(name='prayer'){
+    try{
+      const a=primeAdhanAudio();
+      if(!a){speakFallback(name);return null}
+      if(!a.paused){a.pause();a.currentTime=0}
+      a.volume=Math.max(0,Math.min(1,+d.adv.soundLevel||.95));
+      const q=a.play();
+      if(q&&q.catch)q.catch(()=>{toast('Browser ne background audio block ki. Page ko open rakh kar Test Adhan karein.');speakFallback(name)});
+      vib([120,70,120,70,220]);
+      return a;
+    }catch(e){toast('Adhan audio unavailable.');speakFallback(name);return null}
   }
   function speakFallback(name){
     if(!d.adv.voiceFallback||!('speechSynthesis'in window))return;
     try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Allahu Akbar. It is time for '+name+' prayer.');u.lang='en-US';u.rate=.78;u.volume=1;speechSynthesis.speak(u)}catch(e){}
   }
-  window.advTestAdhan=function(){prime();playAdhan();toast('🕌 Adhan test started')}
+  window.advTestAdhan=function(){prime();primeAdhanAudio();playAdhan('test');toast('🕌 Adhan test started')}
   window.advAskNotify=askNotify;
-  window.advStopAdhan=function(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}try{speechSynthesis.cancel()}catch(e){}if(navigator.vibrate)try{navigator.vibrate(0)}catch(e){}}
+  window.advStopAdhan=function(){alarmTimers.forEach(clearTimeout);alarmTimers=[];if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}try{speechSynthesis.cancel()}catch(e){}if(navigator.vibrate)try{navigator.vibrate(0)}catch(e){}}
   window.advSnooze=function(p){const mins=Number(d.adv.snooze)||5;d.advSnooze={p,until:Date.now()+mins*60000};advSave();toast(p+' reminder snoozed for '+mins+' min');render()}
+  function scheduleNextAlarms(){
+    alarmTimers.forEach(clearTimeout);alarmTimers=[];
+    if(!d.onboard||d.adv.quiet||!d.adv.adhan)return;
+    PR.forEach(p=>{const x=timeObj(t(p));if(!x)return;const delay=x-Date.now();if(delay>0&&delay<36*3600000){
+      alarmTimers.push(setTimeout(()=>{
+        if(d.adv.adhan&&!d.adv.quiet){notify2('🕌 '+p+' — Adhan','It is time for '+p+'.');beep(1040,1.2);playAdhan(p);toast('🕌 Adhan: '+p);}
+        scheduleNextAlarms();
+      },Math.max(0,delay)));
+    }});
+  }
   function next(){try{return typeof nextPrayer==='function'?nextPrayer():null}catch(e){return null}}
   function diffText(ms){if(ms<=0)return 'Now';let m=Math.floor(ms/60000),h=Math.floor(m/60);m%=60;return h?`${h}h ${m}m`:`${m}m`}
   window.advOpen=function(){
@@ -409,7 +456,7 @@ render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date
       <div class="adv-row"><div style="width:100%"><b>🔊 Adhan volume</b><input class="range" type="range" min="0" max="1" step=".05" value="${d.adv.soundLevel}" oninput="d.adv.soundLevel=+this.value;advSave()"></div></div>
       <div class="adv-row"><div style="width:100%"><b>⏰ Snooze duration</b><select onchange="d.adv.snooze=+this.value;advSave()"><option value="3" ${d.adv.snooze==3?'selected':''}>3 minutes</option><option value="5" ${d.adv.snooze==5?'selected':''}>5 minutes</option><option value="10" ${d.adv.snooze==10?'selected':''}>10 minutes</option><option value="15" ${d.adv.snooze==15?'selected':''}>15 minutes</option></select></div></div>
       <div class="adv-row"><div><b>🌙 Quiet mode</b><div class="adv-note">Silences only the new advanced layer. Your original app controls are unchanged.</div></div><button class="switch ${d.adv.quiet?'on':''}" onclick="d.adv.quiet=!d.adv.quiet;advSave();render()"><i></i></button></div>
-      <div class="actions"><button class="btn soft" onclick="advStopAdhan()">⏹ Stop Adhan</button><button class="btn primary" onclick="advAskNotify()">🔔 Allow alerts</button></div>
+      <div class="actions"><button class="btn soft" onclick="advStopAdhan()">⏹ Stop Adhan</button><button class="btn primary" onclick="enableRequiredAccess()">🔐 Allow access</button></div>
       <p class="adv-note" style="margin-bottom:0">Web browsers can suspend background JavaScript/audio when the screen is locked. For true OS-level alarms while the app is closed, this same interface should later be packaged as a native Android app/PWA with an alarm service.</p>
     </div></div>`;
     document.body.insertAdjacentHTML('beforeend',html);
@@ -419,7 +466,7 @@ render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date
     document.getElementById('advancedStrip')?.remove();
     const n=next();
     const box=document.createElement('section');box.id='advancedStrip';box.className='advanced-strip';
-    box.innerHTML=`<div class="row"><div><div class="adv-title">✨ Smart Prayer Command Center</div><div class="muted">${n?`Next: ${esc(n.p)} · ${esc(t(n.p))} · ${diffText(n.time-new Date())}`:'Prayer schedule complete'} </div></div><button class="btn primary mini" onclick="advOpen()">Open</button></div><div class="adv-grid"><button class="adv-chip" onclick="advOpen()"><b>⏳ ${n?diffText(n.time-new Date()):'—'}</b><span>Next prayer</span></button><button class="adv-chip" onclick="advTestAdhan()">🕌 <b>Adhan</b><span>Test audio</span></button><button class="adv-chip" onclick="advAskNotify()">🔔 <b>Alerts</b><span>Permission</span></button><button class="adv-chip" onclick="d.adv.quiet=!d.adv.quiet;advSave();render()">🌙 <b>${d.adv.quiet?'Quiet on':'Quiet off'}</b><span>Advanced layer</span></button></div>`;
+    box.innerHTML=`<div class="row"><div><div class="adv-title">✨ Smart Prayer Command Center</div><div class="muted">${n?`Next: ${esc(n.p)} · ${esc(t(n.p))} · ${diffText(n.time-new Date())}`:'Prayer schedule complete'} </div></div><button class="btn primary mini" onclick="advOpen()">Open</button></div><div class="adv-grid"><button class="adv-chip" onclick="advOpen()"><b>⏳ ${n?diffText(n.time-new Date()):'—'}</b><span>Next prayer</span></button><button class="adv-chip" onclick="advTestAdhan()">🕌 <b>Adhan</b><span>Test audio</span></button><button class="adv-chip" onclick="enableRequiredAccess()">🔐 <b>Access</b><span>Location + alerts</span></button><button class="adv-chip" onclick="d.adv.quiet=!d.adv.quiet;advSave();render()">🌙 <b>${d.adv.quiet?'Quiet on':'Quiet off'}</b><span>Advanced layer</span></button></div>`;
     if(page==='today'){const cards=root.querySelectorAll('.card');cards.length?cards[1]?.after(box):root.appendChild(box)}else root.prepend(box);
   }
   window.render=function(){OLD_RENDER();setTimeout(inject,0)};
@@ -435,13 +482,13 @@ render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date
       sessionStorage.setItem(twoKey,'1');beep(660,.55);vib([80,40,80]);notify2('🧭 Prepare for '+p,p+' begins in about 2 minutes.');toast('2-minute preparation: '+p);
     }
     if(d.adv.adhan&&Math.abs(diff)<=45000&&sessionStorage.getItem(adKey)!=='1'){
-      sessionStorage.setItem(adKey,'1');notify2('🕌 '+p+' — Adhan',`It is time for ${p}.`);playAdhan()||speakFallback(p);toast('🕌 Adhan: '+p);
+      sessionStorage.setItem(adKey,'1');notify2('🕌 '+p+' — Adhan',`It is time for ${p}.`);playAdhan(p);toast('🕌 Adhan: '+p);
     }
   };
-  setInterval(()=>{if(d.onboard){checkAlarms();const e=document.getElementById('advancedStrip');if(e&&!document.hidden){const n=next();if(n){const m=e.querySelector('.adv-chip b');if(m)m.textContent=diffText(n.time-new Date())}}}},10000);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkAlarms();if(d.onboard)inject()}});
+  setInterval(()=>{if(d.onboard){checkAlarms();scheduleNextAlarms();const e=document.getElementById('advancedStrip');if(e&&!document.hidden){const n=next();if(n){const m=e.querySelector('.adv-chip b');if(m)m.textContent=diffText(n.time-new Date())}}}},10000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkAlarms();if(d.onboard){primeAdhanAudio();scheduleNextAlarms();inject()}}});
   advSave();
-  setTimeout(()=>{if(d.onboard)inject()},50);
+  setTimeout(()=>{if(d.onboard){primeAdhanAudio();scheduleNextAlarms();inject()}},50);
 })();
 </script>
 </body></html>
