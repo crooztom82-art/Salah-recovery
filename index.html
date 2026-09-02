@@ -171,8 +171,8 @@ function countryInfo(){return COUNTRIES.find(x=>x[0]===d.country)||COUNTRIES.fin
 function countryLangs(c){let a=Array.isArray(c?.[4])?c[4]:[c?.[4]||"en"];return [...new Set(a.filter(Boolean))]}
 function countryCapital(c){return c?.[3]||c?.[0]||""}
 function findCountry(name){if(!name)return null;const aliases={UK:"United Kingdom",USA:"United States",UAE:"United Arab Emirates"};return COUNTRIES.find(x=>x[0]===name)||COUNTRIES.find(x=>x[0]===aliases[name])||null}
-function applyCountry(name){const c=findCountry(name);if(!c)return;d.country=c[0];d.city=countryCapital(c);d.lat=c[1];d.lon=c[2];d.timezone=c[3]||"";d.method=c[5]||3;const ls=countryLangs(c);if(d.langMode!=="manual"||!ls.includes(d.lang))d.lang=ls[0]||"en";d.langMode="country";save();fetchTimes(true);render();}
-function applyLocation(value){if(value.startsWith("country:")){const name=value.slice(8);applyCountry(name);return;}const city=value.startsWith("city:")?value.slice(5):value;if(CITY[city]){d.city=city;d.lat=null;d.lon=null;const c=findCountry(CITY[city][2]);if(c){d.country=c[0];d.timezone=c[3]||"";if(d.langMode!=="manual")d.lang=countryLangs(c)[0]||d.lang;}save();fetchTimes(true);render();}}
+function applyCountry(name){const c=findCountry(name);if(!c)return;d.country=c[0];d.city=countryCapital(c);d.lat=null;d.lon=null;d.locationSource="saved";d.timezone=c[3]||"";d.method=c[5]||3;const ls=countryLangs(c);if(d.langMode!=="manual"||!ls.includes(d.lang))d.lang=ls[0]||"en";d.langMode="country";save();fetchTimes(true);render();}
+function applyLocation(value){if(value.startsWith("country:")){const name=value.slice(8);applyCountry(name);return;}const city=value.startsWith("city:")?value.slice(5):value;if(CITY[city]){d.city=city;d.lat=null;d.lon=null;d.locationSource="saved";const c=findCountry(CITY[city][2]);if(c){d.country=c[0];d.timezone=c[3]||"";if(d.langMode!=="manual")d.lang=countryLangs(c)[0]||d.lang;}save();fetchTimes(true);render();}}
 function countryLocationOptions(){return COUNTRIES.map(c=>`<option value="country:${esc(c[0])}" ${c[0]===d.country?"selected":""}>${esc(c[0])} — ${esc(countryCapital(c))}</option>`).join("")}
 
 const METHODS={Karachi:1,MWL:3,Egypt:5,UmmAlQura:4,Tehran:7,Dubai:16,Turkey:13,Singapore:11};
@@ -185,13 +185,15 @@ const DUAS=[
 ["When you miss a prayer","Turn back to Allah","Make sincere tawbah and take the next practical step."]
 ];
 let d=JSON.parse(localStorage.getItem("salah_recovery_pro_v5")||"null")||{
-onboard:false,city:"Karachi",lat:null,lon:null,madhab:"Hanafi",method:1,theme:"light",timezone:"Asia/Karachi",
+onboard:false,city:"Karachi",lat:null,lon:null,locationSource:"saved",madhab:"Hanafi",method:1,theme:"light",timezone:"Asia/Karachi",
 records:[],alarms:true,adhan:true,lead:10,fajrAdhan:true,focus:false,sound:"adhan",
 prayers:{},notes:[],tasbih:0,streakBest:0,lastFetch:"",qibla:null,customTune:0
 };
 const legacy=JSON.parse(localStorage.getItem("salah_recovery_pro_v3")||"null");
-if(legacy&&(!d.country||!d.lang)){d.country=legacy.country||"Pakistan";d.lang=legacy.lang||"ur";d.langMode=legacy.langMode||"country";d.madhab=legacy.madhab||d.madhab;d.theme=legacy.theme||d.theme;d.records=legacy.records||d.records;d.notes=legacy.notes||d.notes;d.tasbih=legacy.tasbeeh||d.tasbih;d.ramadan=legacy.ramadan||false;d.qaza=legacy.qaza||{};const ci=COUNTRIES.find(x=>x[0]===d.country);if(ci){d.city=countryCapital(ci);d.lat=ci[1];d.lon=ci[2];d.timezone=ci[3]||"";d.method=ci[5];}save()}
+if(legacy&&(!d.country||!d.lang)){d.country=legacy.country||"Pakistan";d.lang=legacy.lang||"ur";d.langMode=legacy.langMode||"country";d.madhab=legacy.madhab||d.madhab;d.theme=legacy.theme||d.theme;d.records=legacy.records||d.records;d.notes=legacy.notes||d.notes;d.tasbih=legacy.tasbeeh||d.tasbih;d.ramadan=legacy.ramadan||false;d.qaza=legacy.qaza||{};const ci=COUNTRIES.find(x=>x[0]===d.country);if(ci){d.city=countryCapital(ci);d.lat=null;d.lon=null;d.locationSource="saved";d.timezone=ci[3]||"";d.method=ci[5];}save()}
 if(!d.country){d.country="Pakistan";d.lang="ur";d.langMode="country";}
+if(!d.locationSource)d.locationSource=d.city==="My location"&&d.lat!=null&&d.lon!=null?"gps":"saved";
+if(d.locationSource!=="gps"){d.lat=null;d.lon=null;}
 if(!d.timezone){const ci=findCountry(d.country);if(ci)d.timezone=ci[3]||"Asia/Karachi";}
 d.records ||= []; d.prayers ||= {}; d.notes ||= []; d.lead=Number.isFinite(d.lead)?d.lead:10;
 let page="today",modal=null,selected=null,reason="",toastTimer=null,audioCtx=null,lastAlarmKey="",lastAdhanKey="",wake=null;
@@ -215,15 +217,31 @@ async function enableAlarms(){d.alarms=true;save();prime();if("Notification"in w
 function testAlarm(){beep();notify("🔔 Salah reminder","Prayer time is approaching.");toast("Alarm tested")}
 function testAdhan(){prime();playAdhan();toast("Adhan test started")}
 function timeObj(t,day=todayKey()){return zonedDate(day,t)}
-function localName(){return d.city+(d.lat? " • GPS": "")}
-function getCoords(){return d.lat&&d.lon?[d.lat,d.lon]:CITY[d.city]?.slice(0,2)||CITY.Karachi.slice(0,2)}
+function localName(){return d.locationSource==="gps"&&d.lat!=null&&d.lon!=null?"My location • GPS":`${d.city} • saved location`}
+function getCoords(){if(d.locationSource==="gps"&&d.lat!=null&&d.lon!=null)return[d.lat,d.lon];if(CITY[d.city])return CITY[d.city].slice(0,2);const c=countryInfo();return c?[c[1],c[2]]:CITY.Karachi.slice(0,2)}
 function methodId(){return d.method||1}
 async function fetchTimes(silent=false){
  let [lat,lon]=getCoords(),dateKey=locationDateKey(),date=`${dateKey.slice(8,10)}-${dateKey.slice(5,7)}-${dateKey.slice(0,4)}`;
  try{
-  let url=`https://api.aladhan.com/v1/timings/${date}?latitude=${lat}&longitude=${lon}&method=${methodId()}&school=${d.madhab==="Hanafi"?1:0}&tune=0,0,0,${d.customTune||0},0,0,0,0,0`;
-  let r=await fetch(url);let j=await r.json();let t=j?.data?.timings;
+  const makeUrl=(day)=>`https://api.aladhan.com/v1/timings/${day}?latitude=${lat}&longitude=${lon}&method=${methodId()}&school=${d.madhab==="Hanafi"?1:0}&tune=0,0,0,${d.customTune||0},0,0,0,0,0`;
+  let r=await fetch(makeUrl(date));let j=await r.json();let t=j?.data?.timings;
   if(!t)throw Error("No timing data");
+
+  // When GPS is being used, AlAdhan returns the authoritative timezone for
+  // the exact coordinates. If the saved/device timezone crosses midnight
+  // differently, request the correct local calendar date once more.
+  const apiTz=j?.data?.meta?.timezone||"";
+  if(apiTz && d.lat!=null){
+    const localKey=new Intl.DateTimeFormat("en-CA",{timeZone:apiTz,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+    if(localKey!==dateKey){
+      dateKey=localKey;
+      date=`${dateKey.slice(8,10)}-${dateKey.slice(5,7)}-${dateKey.slice(0,4)}`;
+      r=await fetch(makeUrl(date));j=await r.json();t=j?.data?.timings;
+      if(!t)throw Error("No timing data for local date");
+    }
+    d.timezone=apiTz;
+  }
+
   d.prayers={Fajr:t.Fajr,Dhuhr:t.Dhuhr,Asr:t.Asr,Maghrib:t.Maghrib,Isha:t.Isha,Sunrise:t.Sunrise,Sunset:t.Sunset,Midnight:t.Midnight};
   d.hijri=j.data.date.hijri;d.greg=j.data.date.gregorian;d.timezone=j?.data?.meta?.timezone||d.timezone||locationTimeZone();d.lastFetch=Date.now();save();render();if(!silent)toast("Prayer times updated");
  }catch(e){if(!silent)toast("Could not update online times; using saved/default times.");if(!d.prayers.Fajr)fallbackTimes()}
@@ -240,6 +258,31 @@ function countdown(){let n=nextPrayer();if(!n)return"All prayers have passed —
 function streak(){let set=new Set(d.records.filter(x=>x.status==="completed").map(x=>x.date));let cur=0,dt=new Date();while(true){let k=dt.toLocaleDateString("en-CA");if(!set.has(k))break;cur++;dt.setDate(dt.getDate()-1)}return cur}
 function score(){let total=d.records.length,good=d.records.filter(x=>x.status==="completed").length;return total?Math.round(good/total*100):0}
 function qiblaBearing(lat,lon){let ka=21.4225*Math.PI/180,ko=39.8262*Math.PI/180,la=lat*Math.PI/180,lo=lon*Math.PI/180;let y=Math.sin(ko-lo),x=Math.cos(la)*Math.tan(ka)-Math.sin(la)*Math.cos(ko-lo);return(Math.atan2(y,x)*180/Math.PI+360)%360}
+let compassHeading=null,compassListening=false;
+function onCompass(e){
+  let h=null;
+  if(typeof e.webkitCompassHeading==="number"&&isFinite(e.webkitCompassHeading)) h=e.webkitCompassHeading;
+  else if(typeof e.alpha==="number"&&isFinite(e.alpha)) h=(360-e.alpha)%360;
+  if(h==null)return;
+  compassHeading=(h+360)%360;
+  if(page==="tools"&&toolTab==="qibla")render();
+}
+async function enableCompass(){
+  try{
+    if(typeof DeviceOrientationEvent==="undefined"){toast("Phone compass is not available in this browser.");return}
+    if(typeof DeviceOrientationEvent.requestPermission==="function"){
+      const p=await DeviceOrientationEvent.requestPermission();
+      if(p!=="granted"){toast("Compass permission was not granted.");return}
+    }
+    if(!compassListening){
+      window.addEventListener("deviceorientationabsolute",onCompass,true);
+      window.addEventListener("deviceorientation",onCompass,true);
+      compassListening=true;
+    }
+    toast("Compass enabled — move the phone in a figure-8 to calibrate.");
+    if(page==="tools"&&toolTab==="qibla")render();
+  }catch(e){toast("Compass could not be enabled on this device.");}
+}
 function locationName(){return d.lat?`${d.city} • GPS location`:`${d.city} • saved city`}
 function nav(x){page=x;modal=null;render();window.scrollTo(0,0)}
 function shell(content){return`<div class="app"><header class="top"><div><div class="title">Salah Recovery <span class="badge">PRO</span></div><div class="muted">${new Date().toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})} · ${esc(locationName())}</div></div><button class="btn soft mini" onclick="toggleTheme()">${d.theme==="dark"?"☀️":"🌙"}</button></header>${content}<nav class="nav">${[["today","🏠","Home"],["recovery","🤲","Recovery"],["tools","🧭","Tools"],["insights","📊","Insights"],["settings","⚙️","Settings"]].map(a=>`<button class="${page===a[0]?"active":""}" onclick="nav('${a[0]}')"><span>${a[1]}</span>${a[2]}</button>`).join("")}</nav>${modalHtml()}</div>`}
@@ -264,7 +307,9 @@ function tools(){
  return `<h2 style="padding:10px 14px 0">Tools</h2><div class="tabs"><button class="sel" onclick="toolTab='qibla';render()">🧭 Qibla</button><button onclick="toolTab='tasbih';render()">📿 Tasbih</button><button onclick="toolTab='duas';render()">🤲 Duas</button></div>${toolTab==="tasbih"?tasbih():toolTab==="duas"?duas():qibla(bearing)}`;
 }
 let toolTab="qibla";
-function qibla(b){return`<section class="card center"><div class="muted">QIBLA DIRECTION</div><h2>${Math.round(b)}° from North</h2><div class="qibla"><div class="compassN">N</div><div class="needle" style="transform:rotate(${b}deg)">↑</div></div><p class="muted">${d.lat?`Based on your GPS coordinates.`:"Using your selected city. Enable GPS for a more precise bearing."}</p><button class="btn primary" onclick="getGPS()">📍 Use my location</button></section><section class="card"><h3>How it helps</h3><p class="muted" style="margin-top:7px">The direction is calculated as the initial bearing from your location to the Kaaba in Makkah. A phone compass can be used alongside this direction.</p></section>`}
+function qibla(b){
+  const relative=compassHeading==null?b:((b-compassHeading+540)%360)-180;
+  return`<section class="card center"><div class="muted">QIBLA DIRECTION</div><h2>${Math.round(b)}° from North</h2><div class="qibla"><div class="compassN">N</div><div class="needle" style="transform:rotate(${relative}deg)">↑</div></div><p class="muted">${d.locationSource==="gps"&&d.lat!=null?`Based on your GPS coordinates.`:"Using your selected city. Enable GPS for a more precise bearing."}</p><div class="actions"><button class="btn primary" onclick="getGPS()">📍 Use my location</button><button class="btn soft" onclick="enableCompass()">🧭 Enable compass</button></div><p class="muted" style="margin-top:8px">${compassHeading==null?"Compass not connected — the arrow shows the Qibla bearing from North.":"Live compass active — rotate the phone until the arrow points forward."}</p></section><section class="card"><h3>How it helps</h3><p class="muted" style="margin-top:7px">The direction is calculated as the initial bearing from your location to the Kaaba in Makkah. The live compass uses your phone's orientation when the browser provides it.</p></section>`}
 function tasbih(){return`<section class="card center"><div class="muted">DIGITAL TASBIH</div><div class="tasbih">${d.tasbih||0}</div><button class="tap" onclick="d.tasbih=(d.tasbih||0)+1;save();render()">Tap to count</button><div class="actions"><button class="btn soft" onclick="d.tasbih=0;save();render()">Reset</button><button class="btn primary" onclick="navigator.vibrate?.([30,20,30])">Vibrate</button></div></section><section class="card"><div class="row"><b>Suggested cycle</b><span class="badge">33 × 3</span></div><p class="muted" style="margin-top:7px">Use the counter for your personal dhikr routine.</p></section>`}
 function duas(){return`<section class="card">${DUAS.map(x=>`<div class="feature"><div class="featureIcon">🤲</div><div><b>${esc(x[0])}</b><div style="margin-top:4px">${esc(x[1])}</div><div class="muted rtl" style="margin-top:5px">${esc(x[2])}</div></div></div>`).join("")}</section>`}
 function insights(){
@@ -295,7 +340,11 @@ function modalHtml(){
 }
 function getGPS(){
  if(!navigator.geolocation){toast("GPS is not available in this browser");return}
- toast("Requesting your location…");navigator.geolocation.getCurrentPosition(async pos=>{d.lat=pos.coords.latitude;d.lon=pos.coords.longitude;d.city="My location";save();await fetchTimes(true);let b=qiblaBearing(d.lat,d.lon);d.qibla=b;save();render();toast("GPS location applied");},()=>toast("Location permission denied — using selected city."),{enableHighAccuracy:true,timeout:10000});
+ toast("Requesting your location…");navigator.geolocation.getCurrentPosition(async pos=>{
+   d.lat=pos.coords.latitude;d.lon=pos.coords.longitude;d.city="My location";d.locationSource="gps";
+   d.qibla=qiblaBearing(d.lat,d.lon);
+   save();await fetchTimes(true);save();render();toast("GPS location applied — prayer times and Qibla updated");
+ },()=>toast("Location permission denied — using selected city."),{enableHighAccuracy:true,timeout:15000,maximumAge:0});
 }
 function toggleTheme(){d.theme=d.theme==="dark"?"light":"dark";save();render()}
 async function toggleFocus(){d.focus=!d.focus;save();if(d.focus&&"wakeLock"in navigator){try{wake=await navigator.wakeLock.request("screen");toast("Focus mode on")}catch(e){toast("Focus mode on")} }else if(wake){try{await wake.release()}catch(e){}wake=null}render()}
@@ -307,11 +356,11 @@ function checkAlarms(){
  if(diff>0&&diff<=d.lead*60000&&lastAlarmKey!==pre){lastAlarmKey=pre;beep(880,.9);notify("🔔 "+p+" soon",`${p} is in about ${Math.max(1,Math.ceil(diff/60000))} minutes.`)}
  if(Math.abs(diff)<=30000&&lastAdhanKey!==ad){lastAdhanKey=ad;notify("🕌 "+p,`It is time for ${p}.`);if(d.adhan)playAdhan(p==="Fajr"&&d.fajrAdhan)}})
 }
-function onboarding(){return`<div style="min-height:100vh;display:grid;place-items:center;padding:22px"><section class="card" style="margin:0;width:100%;padding:28px;text-align:center"><div style="font-size:58px">🤲</div><h1 style="margin:10px 0 7px">Salah Recovery <span class="badge">PRO</span></h1><p class="muted">A private companion for prayer consistency, missed-salah recovery, Qibla, reminders and reflection.</p><label style="display:block;text-align:left;margin-top:22px">Choose your country<select id="ocountry">${COUNTRIES.map(c=>`<option>${esc(c[0])}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Choose your city<select id="ocity">${Object.keys(CITY).filter(x=>x!=="New York").map(x=>`<option>${x}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Asr school<select id="omadhab"><option>Hanafi</option><option>Shafi</option></select></label><button class="btn primary" style="width:100%;margin-top:16px" onclick="applyCountry(ocountry.value);d.city=ocity.value;d.lat=null;d.lon=null;d.madhab=omadhab.value;d.onboard=true;save();fetchTimes(true);render()">Begin my journey →</button><p class="small muted" style="margin-top:13px">You can change location, calculation method and alarm settings later.</p></section></div>`}
+function onboarding(){return`<div style="min-height:100vh;display:grid;place-items:center;padding:22px"><section class="card" style="margin:0;width:100%;padding:28px;text-align:center"><div style="font-size:58px">🤲</div><h1 style="margin:10px 0 7px">Salah Recovery <span class="badge">PRO</span></h1><p class="muted">A private companion for prayer consistency, missed-salah recovery, Qibla, reminders and reflection.</p><label style="display:block;text-align:left;margin-top:22px">Choose your country<select id="ocountry">${COUNTRIES.map(c=>`<option>${esc(c[0])}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Choose your city<select id="ocity">${Object.keys(CITY).filter(x=>x!=="New York").map(x=>`<option>${x}</option>`).join("")}</select></label><label style="display:block;text-align:left;margin-top:10px">Asr school<select id="omadhab"><option>Hanafi</option><option>Shafi</option></select></label><button class="btn primary" style="width:100%;margin-top:16px" onclick="applyCountry(ocountry.value);d.city=ocity.value;d.lat=null;d.lon=null;d.locationSource='saved';d.madhab=omadhab.value;d.onboard=true;save();fetchTimes(true);render()">Begin my journey →</button><p class="small muted" style="margin-top:13px">You can change location, calculation method and alarm settings later.</p></section></div>`}
 function render(){document.body.className=d.theme==="dark"?"dark":"";document.getElementById("root").innerHTML=d.onboard?shell(page==="today"?today():page==="recovery"?recovery():page==="tools"?tools():page==="insights"?insights():page==="history"?history():settings()):onboarding()}
 setInterval(()=>{checkAlarms();let e=document.getElementById("countdown");if(e)e.textContent=countdown()},15000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkAlarms();if(d.focus&&"wakeLock"in navigator&&!wake)toggleFocus()}});
-render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date.now()-d.lastFetch>12*3600000)fetchTimes(true)}
+render(); if(d.onboard){if(!d.prayers.Fajr)fallbackTimes();if(!d.lastFetch||Date.now()-d.lastFetch>6*3600000)fetchTimes(true)}
 </script>
 <script id="salah-advanced-addon-js">
 /* SALAH RECOVERY — ADVANCED PRAYER COMMAND CENTER
