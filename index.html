@@ -169,9 +169,10 @@ const LANG_NAMES={"af": "Afrikaans", "am": "Amharic", "ar": "العربية", "a
 const LEGACY_COUNTRY_MAP={Pakistan:"Karachi",Saudi_Arabia:"Riyadh",United_Arab_Emirates:"Dubai",Turkey:"Istanbul",United_Kingdom:"London"};
 function countryInfo(){return COUNTRIES.find(x=>x[0]===d.country)||COUNTRIES.find(x=>x[0]==="Pakistan");}
 function countryLangs(c){let a=Array.isArray(c?.[4])?c[4]:[c?.[4]||"en"];return [...new Set(a.filter(Boolean))]}
-function countryCapital(c){return Array.isArray(c?.[4])?(c?.[3]||c?.[0]||""):(c?.[0]||"")}
-function applyCountry(name){const c=COUNTRIES.find(x=>x[0]===name);if(!c)return;d.country=c[0];d.city=countryCapital(c);d.lat=c[1];d.lon=c[2];d.method=c[5]||3;const ls=countryLangs(c);if(d.langMode!=="manual"||!ls.includes(d.lang))d.lang=ls[0]||"en";d.langMode="country";save();fetchTimes(true);render();}
-function applyLocation(value){if(value.startsWith("country:")){const name=value.slice(8);applyCountry(name);return;}const city=value.startsWith("city:")?value.slice(5):value;if(CITY[city]){d.city=city;d.lat=null;d.lon=null;const c=COUNTRIES.find(x=>x[0]===CITY[city][2]);if(c)d.country=c[0];if(d.langMode!=="manual"&&c)d.lang=countryLangs(c)[0]||d.lang;save();fetchTimes(true);render();}}
+function countryCapital(c){return c?.[3]||c?.[0]||""}
+function findCountry(name){if(!name)return null;const aliases={UK:"United Kingdom",USA:"United States",UAE:"United Arab Emirates"};return COUNTRIES.find(x=>x[0]===name)||COUNTRIES.find(x=>x[0]===aliases[name])||null}
+function applyCountry(name){const c=findCountry(name);if(!c)return;d.country=c[0];d.city=countryCapital(c);d.lat=c[1];d.lon=c[2];d.timezone=c[3]||"";d.method=c[5]||3;const ls=countryLangs(c);if(d.langMode!=="manual"||!ls.includes(d.lang))d.lang=ls[0]||"en";d.langMode="country";save();fetchTimes(true);render();}
+function applyLocation(value){if(value.startsWith("country:")){const name=value.slice(8);applyCountry(name);return;}const city=value.startsWith("city:")?value.slice(5):value;if(CITY[city]){d.city=city;d.lat=null;d.lon=null;const c=findCountry(CITY[city][2]);if(c){d.country=c[0];d.timezone=c[3]||"";if(d.langMode!=="manual")d.lang=countryLangs(c)[0]||d.lang;}save();fetchTimes(true);render();}}
 function countryLocationOptions(){return COUNTRIES.map(c=>`<option value="country:${esc(c[0])}" ${c[0]===d.country?"selected":""}>${esc(c[0])} — ${esc(countryCapital(c))}</option>`).join("")}
 
 const METHODS={Karachi:1,MWL:3,Egypt:5,UmmAlQura:4,Tehran:7,Dubai:16,Turkey:13,Singapore:11};
@@ -184,18 +185,23 @@ const DUAS=[
 ["When you miss a prayer","Turn back to Allah","Make sincere tawbah and take the next practical step."]
 ];
 let d=JSON.parse(localStorage.getItem("salah_recovery_pro_v5")||"null")||{
-onboard:false,city:"Karachi",lat:null,lon:null,madhab:"Hanafi",method:1,theme:"light",
+onboard:false,city:"Karachi",lat:null,lon:null,madhab:"Hanafi",method:1,theme:"light",timezone:"Asia/Karachi",
 records:[],alarms:true,adhan:true,lead:10,fajrAdhan:true,focus:false,sound:"adhan",
 prayers:{},notes:[],tasbih:0,streakBest:0,lastFetch:"",qibla:null,customTune:0
 };
 const legacy=JSON.parse(localStorage.getItem("salah_recovery_pro_v3")||"null");
-if(legacy&&(!d.country||!d.lang)){d.country=legacy.country||"Pakistan";d.lang=legacy.lang||"ur";d.langMode=legacy.langMode||"country";d.madhab=legacy.madhab||d.madhab;d.theme=legacy.theme||d.theme;d.records=legacy.records||d.records;d.notes=legacy.notes||d.notes;d.tasbih=legacy.tasbeeh||d.tasbih;d.ramadan=legacy.ramadan||false;d.qaza=legacy.qaza||{};const ci=COUNTRIES.find(x=>x[0]===d.country);if(ci){d.city=ci[0];d.lat=ci[1];d.lon=ci[2];d.method=ci[5];}save()}
+if(legacy&&(!d.country||!d.lang)){d.country=legacy.country||"Pakistan";d.lang=legacy.lang||"ur";d.langMode=legacy.langMode||"country";d.madhab=legacy.madhab||d.madhab;d.theme=legacy.theme||d.theme;d.records=legacy.records||d.records;d.notes=legacy.notes||d.notes;d.tasbih=legacy.tasbeeh||d.tasbih;d.ramadan=legacy.ramadan||false;d.qaza=legacy.qaza||{};const ci=COUNTRIES.find(x=>x[0]===d.country);if(ci){d.city=countryCapital(ci);d.lat=ci[1];d.lon=ci[2];d.timezone=ci[3]||"";d.method=ci[5];}save()}
 if(!d.country){d.country="Pakistan";d.lang="ur";d.langMode="country";}
+if(!d.timezone){const ci=findCountry(d.country);if(ci)d.timezone=ci[3]||"Asia/Karachi";}
 d.records ||= []; d.prayers ||= {}; d.notes ||= []; d.lead=Number.isFinite(d.lead)?d.lead:10;
 let page="today",modal=null,selected=null,reason="",toastTimer=null,audioCtx=null,lastAlarmKey="",lastAdhanKey="",wake=null;
 
 function save(){localStorage.setItem("salah_recovery_pro_v5",JSON.stringify(d))}
-function todayKey(){return new Date().toLocaleDateString("en-CA")}
+function locationTimeZone(){return d.timezone||countryInfo()?.[3]||Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"}
+function locationDateKey(){try{return new Intl.DateTimeFormat("en-CA",{timeZone:locationTimeZone(),year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}catch(e){return new Date().toLocaleDateString("en-CA")}}
+function todayKey(){return locationDateKey()}
+function zonedDate(dateKey,time){let m=String(time).match(/(\d{1,2}):(\d{2})/);if(!m)return null;let h=+m[1],mi=+m[2];let guess=new Date(`${dateKey}T${String(h).padStart(2,"0")}:${String(mi).padStart(2,"0")}:00Z`);try{const parts=new Intl.DateTimeFormat("en-US",{timeZone:locationTimeZone(),hour12:false,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(guess);let o={};parts.forEach(x=>o[x.type]=x.value);let asUTC=Date.UTC(+o.year,+o.month-1,+o.day,+o.hour,+o.minute,+o.second);let target=Date.UTC(+dateKey.slice(0,4),+dateKey.slice(5,7)-1,+dateKey.slice(8,10),h,mi,0);guess=new Date(guess.getTime()+(target-asUTC));}catch(e){}return guess}
+
 function fmt(x){return new Date(x+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"})}
 function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function toast(x){clearTimeout(toastTimer);let e=document.createElement("div");e.className="toast";e.textContent=x;document.body.appendChild(e);toastTimer=setTimeout(()=>e.remove(),2600)}
@@ -208,18 +214,18 @@ function playAdhan(fajr=false){let a=new Audio(fajr?FAJR:ADHAN);a.volume=.9;a.pl
 async function enableAlarms(){d.alarms=true;save();prime();if("Notification"in window&&Notification.permission==="default")try{await Notification.requestPermission()}catch(e){};toast("Reminders enabled");render()}
 function testAlarm(){beep();notify("🔔 Salah reminder","Prayer time is approaching.");toast("Alarm tested")}
 function testAdhan(){prime();playAdhan();toast("Adhan test started")}
-function timeObj(t,day=todayKey()){let m=String(t).match(/(\d{1,2}):(\d{2})/);if(!m)return null;let h=+m[1],mi=+m[2];let x=new Date(day+"T00:00:00");x.setHours(h,mi,0,0);return x}
+function timeObj(t,day=todayKey()){return zonedDate(day,t)}
 function localName(){return d.city+(d.lat? " • GPS": "")}
 function getCoords(){return d.lat&&d.lon?[d.lat,d.lon]:CITY[d.city]?.slice(0,2)||CITY.Karachi.slice(0,2)}
 function methodId(){return d.method||1}
 async function fetchTimes(silent=false){
- let [lat,lon]=getCoords(),dt=new Date(),date=`${String(dt.getDate()).padStart(2,"0")}-${String(dt.getMonth()+1).padStart(2,"0")}-${dt.getFullYear()}`;
+ let [lat,lon]=getCoords(),dateKey=locationDateKey(),date=`${dateKey.slice(8,10)}-${dateKey.slice(5,7)}-${dateKey.slice(0,4)}`;
  try{
   let url=`https://api.aladhan.com/v1/timings/${date}?latitude=${lat}&longitude=${lon}&method=${methodId()}&school=${d.madhab==="Hanafi"?1:0}&tune=0,0,0,${d.customTune||0},0,0,0,0,0`;
   let r=await fetch(url);let j=await r.json();let t=j?.data?.timings;
   if(!t)throw Error("No timing data");
   d.prayers={Fajr:t.Fajr,Dhuhr:t.Dhuhr,Asr:t.Asr,Maghrib:t.Maghrib,Isha:t.Isha,Sunrise:t.Sunrise,Sunset:t.Sunset,Midnight:t.Midnight};
-  d.hijri=j.data.date.hijri;d.greg=j.data.date.gregorian;d.lastFetch=Date.now();save();render();if(!silent)toast("Prayer times updated");
+  d.hijri=j.data.date.hijri;d.greg=j.data.date.gregorian;d.timezone=j?.data?.meta?.timezone||d.timezone||locationTimeZone();d.lastFetch=Date.now();save();render();if(!silent)toast("Prayer times updated");
  }catch(e){if(!silent)toast("Could not update online times; using saved/default times.");if(!d.prayers.Fajr)fallbackTimes()}
 }
 function fallbackTimes(){let x={Karachi:["05:10","12:45","16:10","18:55","20:25"],Lahore:["05:00","12:35","16:00","18:45","20:15"],Islamabad:["04:55","12:30","15:55","18:40","20:10"],Makkah:["04:30","12:15","15:45","18:30","20:00"],Madinah:["04:45","12:20","15:50","18:35","20:05"],Riyadh:["04:15","12:00","15:30","18:15","19:45"],Dubai:["04:55","12:25","15:55","18:40","20:10"],London:["05:45","13:00","16:15","19:00","20:30"],"New York":["05:00","12:55","16:45","19:30","21:00"]};let a=x[d.city]||x.Karachi;d.prayers=Object.fromEntries(PR.map((p,i)=>[p,a[i]]))}
